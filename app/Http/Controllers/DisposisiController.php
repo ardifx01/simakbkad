@@ -89,8 +89,10 @@ class DisposisiController extends Controller
     public function detail($id)
     {
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
-        return view('admin.detail_disposisi', compact('disposisi'));
+        $surat = $disposisi->surat;
+        return view('admin.detail_disposisi', compact('disposisi', 'surat'));
     }
+
     public function disposisiAsset()
     {
         $user = Auth::user();
