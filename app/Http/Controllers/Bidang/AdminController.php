@@ -7,6 +7,7 @@ use App\Models\SuratMasuk;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
@@ -64,6 +65,9 @@ class AdminController extends Controller
             'created_by'    => Auth::id(),
             'status_disposisi' => 'Belum',
         ]);
+        // Kirim notifikasi WA ke Kepala Badan
+        $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi.";
+        $this->kirimWaKaban($pesan);
 
         return redirect()->route('admin.input_surat')->with('success', 'Surat berhasil ditambahkan!');
     }
@@ -83,5 +87,16 @@ class AdminController extends Controller
     {
         $users = User::all();
         return view('admin.users', compact('users'));
+    }
+    public function kirimWaKaban($pesan)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => '6FgWhQZsCZBPm8fZAUSW',
+        ])->asForm()->post('https://api.fonnte.com/send', [
+            'target' => '6281275232909', // Ganti dengan nomor Kepala Badan
+            'message' => $pesan,
+        ]);
+
+        return $response->json();
     }
 }
