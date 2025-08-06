@@ -11,8 +11,6 @@
             </a>
         </div>
 
-
-
         <div class="col-md-4">
             <div class="card border-info mb-3">
                 <div class="card-header bg-info text-white">Detail Surat</div>
