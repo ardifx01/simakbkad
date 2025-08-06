@@ -11,7 +11,7 @@
             </a>
         </div>
 
-     
+
 
         <div class="col-md-4">
             <div class="card border-info mb-3">
@@ -32,7 +32,7 @@
             <div class="card border-info mb-3">
                 <div class="card-header bg-info text-white">Tampilan Surat</div>
                 <div class="card-body p-2">
-                    <embed src="{{ asset('uploads/surat_masuk/' . $surat->file_surat) }}" width="100%" height="500px"
+                    <embed src="{{ asset('storage/' . $surat->file_surat) }}" width="100%" height="500px"
                         type="application/pdf">
                 </div>
             </div>

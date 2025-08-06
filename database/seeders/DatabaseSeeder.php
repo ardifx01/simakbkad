@@ -24,6 +24,41 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('roles')->insert([
+            'id' => 2,
+            'nama_role' => 'Kepala Badan',
+            'role_id' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('roles')->insert([
+            'id' => 3,
+            'nama_role' => 'Bidang Asset',
+            'role_id' => 3,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('roles')->insert([
+            'id' => 4,
+            'nama_role' => 'Bidang Akuntansi',
+            'role_id' => 4,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('roles')->insert([
+            'id' => 5,
+            'nama_role' => 'Bidang Anggaran',
+            'role_id' => 5,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('roles')->insert([
+            'id' => 6,
+            'nama_role' => 'Bidang Pembendaharaan',
+            'role_id' => 6,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         DB::table('users')->insert([
             'nama' => 'Test User',

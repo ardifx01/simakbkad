@@ -47,7 +47,9 @@ class AdminController extends Controller
 
         $file = $request->file('file_surat');
         $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('uploads/surat_masuk'), $fileName);
+
+        // Simpan file ke storage/app/public/surat_masuk
+        $filePath = $file->storeAs('surat_masuk', $fileName, 'public');
 
         SuratMasuk::create([
             'jenis_surat'   => $request->jenis_surat,
@@ -56,7 +58,7 @@ class AdminController extends Controller
             'tanggal_masuk' => $request->tanggal_masuk,
             'asal_surat'    => $request->asal_surat,
             'perihal'       => $request->perihal,
-            'file_surat'    => $fileName,
+            'file_surat'    => $filePath, // Simpan path relatif
             'no_agenda'     => $request->no_agenda,
             'sifat'         => $request->sifat,
             'created_by'    => Auth::id(),
@@ -82,5 +84,4 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.users', compact('users'));
     }
-    
 }

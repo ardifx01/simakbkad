@@ -52,8 +52,8 @@
             <div class="card border-info mb-3">
                 <div class="card-header bg-info text-white">File Surat</div>
                 <div class="card-body p-2">
-                    <embed src="{{ asset('uploads/surat_masuk/' . $disposisi->surat->file_surat) }}" width="100%"
-                        height="500px" type="application/pdf">
+                    <embed src="{{ asset('storage/' . $surat->file_surat) }}" width="100%" height="500px"
+                        type="application/pdf">
                 </div>
             </div>
         </div>
