@@ -53,7 +53,6 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/tambahUser', [UsersController::class, 'index'])->name('admin.tambahPengguna');
     Route::post('/admin/tambahUser', [UsersController::class, 'store'])->name('admin.user.store');
     Route::patch('/admin/user/{id}/toggle', [UsersController::class, 'toggleStatus'])->name('admin.user.toggleStatus');
-
 });
 
 
@@ -70,8 +69,8 @@ Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
     Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
     Route::get('/asset/disposisi', [DisposisiController::class, 'disposisiAsset'])->name('asset.disposisi.index');
     Route::get('/asset/disposisi/{id}/detail', [DisposisiController::class, 'detailAsset'])->name('asset.disposisi.detail');
-        Route::get('/asset/tindaklanjut/{id}/create', [TindakLanjutController::class, 'create'])->name('asset.tindaklanjut.create');
-Route::post('/asset/tindaklanjut/{id}/store', [TindakLanjutController::class, 'store'])->name('asset.tindaklanjut.store');
+    Route::get('/asset/tindaklanjut/{id}/create', [TindakLanjutController::class, 'create'])->name('asset.tindaklanjut.create');
+    Route::post('/asset/tindaklanjut/{id}/store', [TindakLanjutController::class, 'store'])->name('asset.tindaklanjut.store');
 });
 
 
