@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bidang;
 use App\Http\Controllers\Controller;
 use App\Models\SuratMasuk;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -46,11 +47,10 @@ class AdminController extends Controller
             'file_surat.max' => 'File surat melebihi kapasitas!',
         ]);
 
-        $file = $request->file('file_surat');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-
-        // Simpan file ke storage/app/public/surat_masuk
-        $filePath = $file->storeAs('surat_masuk', $fileName, 'public');
+        // Upload ke Cloudinary
+        $fileUrl = Cloudinary::upload($request->file('file_surat')->getRealPath(), [
+            'folder' => 'surat_masuk'
+        ])->getSecurePath();
 
         SuratMasuk::create([
             'jenis_surat'   => $request->jenis_surat,
@@ -59,19 +59,20 @@ class AdminController extends Controller
             'tanggal_masuk' => $request->tanggal_masuk,
             'asal_surat'    => $request->asal_surat,
             'perihal'       => $request->perihal,
-            'file_surat'    => $filePath, // Simpan path relatif
+            'file_surat'    => $fileUrl, // dari Cloudinary
             'no_agenda'     => $request->no_agenda,
             'sifat'         => $request->sifat,
             'created_by'    => Auth::id(),
             'status_disposisi' => 'Belum',
         ]);
-        // Kirim notifikasi WA ke Kepala Badan
-        // Kirim notifikasi WA ke Kepala Badan
+
+        // Kirim WA ke Kaban
         $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi:\nhttps://simakbkad-production-5898.up.railway.app/";
         $this->kirimWaKaban($pesan);
 
         return redirect()->route('admin.input_surat')->with('success', 'Surat berhasil ditambahkan!');
     }
+
 
 
     public function dataSuratMasuk()

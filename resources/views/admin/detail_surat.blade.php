@@ -30,8 +30,11 @@
             <div class="card border-info mb-3">
                 <div class="card-header bg-info text-white">Tampilan Surat</div>
                 <div class="card-body p-2">
-                    <embed src="{{ asset('storage/' . $surat->file_surat) }}" width="100%" height="500px"
-                        type="application/pdf">
+                    @if ($surat->file_surat)
+                        <embed src="{{ $surat->file_surat }}" width="100%" height="500px" type="application/pdf">
+                    @else
+                        <p class="text-danger">File surat tidak tersedia.</p>
+                    @endif
                 </div>
             </div>
         </div>

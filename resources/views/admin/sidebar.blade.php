@@ -25,21 +25,6 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#suratkeluar" aria-expanded="false"
-                aria-controls="suratkeluar">
-                <i class="ti-agenda menu-icon"></i>
-                <span class="menu-title">Surat Keluar</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="suratkeluar">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="">Input Surat Keluar</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ asset('assets/pages/ui-features/dropdowns.html') }}">Arsip Surat Keluar</a></li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                 aria-controls="form-elements">
                 <i class="ti-stats-up menu-icon"></i>
