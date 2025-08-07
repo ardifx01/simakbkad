@@ -93,7 +93,7 @@ class AdminController extends Controller
         $response = Http::withHeaders([
             'Authorization' => '6FgWhQZsCZBPm8fZAUSW',
         ])->asForm()->post('https://api.fonnte.com/send', [
-            'target' => '6281275232909', // Ganti dengan nomor Kepala Badan
+            'target' => '6281367924045', // Ganti dengan nomor Kepala Badan
             'message' => $pesan,
         ]);
 
