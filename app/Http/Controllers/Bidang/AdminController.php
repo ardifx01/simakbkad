@@ -27,50 +27,50 @@ class AdminController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'no_surat'       => 'required|string|max:255',
-            'asal_surat'     => 'required|string|max:255',
-            'perihal'        => 'required|string|max:255',
-            'jenis_surat'    => 'required|string',
-            'file_surat'     => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png',
-            'tanggal_surat'  => 'required|date',
-            'tanggal_masuk'  => 'required|date',
-            'no_agenda'      => 'nullable|string|max:255',
-            'sifat'          => 'required|string',
-        ]);
+{
+    $request->validate([
+        'no_surat'       => 'required|string|max:255',
+        'asal_surat'     => 'required|string|max:255',
+        'perihal'        => 'required|string|max:255',
+        'jenis_surat'    => 'required|string',
+        'file_surat'     => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png',
+        'tanggal_surat'  => 'required|date',
+        'tanggal_masuk'  => 'required|date',
+        'no_agenda'      => 'nullable|string|max:255',
+        'sifat'          => 'required|string',
+    ]);
 
-        // Upload file surat
-        $fileName = time() . '_' . $request->file('file_surat')->getClientOriginalName();
-        $request->file('file_surat')->move(public_path('uploads/surat_masuk'), $fileName);
+    // Simpan file ke folder storage/app/public/surat_masuk
+    $filePath = $request->file('file_surat')->store('surat_masuk', 'public');
+    // Hasilnya seperti: surat_masuk/1623457891_namasurat.pdf
 
-        // Simpan ke database
-        $surat = SuratMasuk::create([
-            'no_surat'         => $request->no_surat,
-            'asal_surat'       => $request->asal_surat,
-            'perihal'          => $request->perihal,
-            'jenis_surat'      => $request->jenis_surat,
-            'file_surat'       => $fileName,
-            'tanggal_surat'    => $request->tanggal_surat,
-            'tanggal_masuk'    => $request->tanggal_masuk,
-            'no_agenda'        => $request->no_agenda,
-            'sifat'            => $request->sifat,
-            'created_by'       => Auth::id(), // jika login sebagai admin
-            'status_disposisi' => 'Belum',
-        ]);
+    $surat = SuratMasuk::create([
+        'no_surat'         => $request->no_surat,
+        'asal_surat'       => $request->asal_surat,
+        'perihal'          => $request->perihal,
+        'jenis_surat'      => $request->jenis_surat,
+        'file_surat'       => $filePath, // simpan path relatif saja
+        'tanggal_surat'    => $request->tanggal_surat,
+        'tanggal_masuk'    => $request->tanggal_masuk,
+        'no_agenda'        => $request->no_agenda,
+        'sifat'            => $request->sifat,
+        'created_by'       => Auth::id(),
+        'status_disposisi' => 'Belum',
+    ]);
 
-        // Kirim notifikasi WA ke Kepala Badan
-        $pesan = "📩 *Surat Masuk Baru*\n"
-            . "Instansi: *{$surat->asal_surat}*\n"
-            . "No. Surat: *{$surat->no_surat}*\n"
-            . "Perihal: *{$surat->perihal}*\n"
-            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
-            . "Silakan login untuk melakukan disposisi.";
+    // Notifikasi WA ke Kepala Badan
+    $pesan = "📩 *Surat Masuk Baru*\n"
+        . "Instansi: *{$surat->asal_surat}*\n"
+        . "No. Surat: *{$surat->no_surat}*\n"
+        . "Perihal: *{$surat->perihal}*\n"
+        . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
+        . "Silakan login untuk melakukan disposisi.";
+    
+    $this->kirimWaKaban($pesan);
 
-        $this->kirimWaKaban($pesan);
+    return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
+}
 
-        return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan dan notifikasi terkirim.');
-    }
 
     public function dataSuratMasuk()
     {
