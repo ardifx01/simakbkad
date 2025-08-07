@@ -66,7 +66,8 @@ class AdminController extends Controller
             'status_disposisi' => 'Belum',
         ]);
         // Kirim notifikasi WA ke Kepala Badan
-        $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi.";
+        // Kirim notifikasi WA ke Kepala Badan
+        $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi:\nhttps://simakbkad-production-5898.up.railway.app/";
         $this->kirimWaKaban($pesan);
 
         return redirect()->route('admin.input_surat')->with('success', 'Surat berhasil ditambahkan!');
@@ -93,7 +94,7 @@ class AdminController extends Controller
         $response = Http::withHeaders([
             'Authorization' => '6FgWhQZsCZBPm8fZAUSW',
         ])->asForm()->post('https://api.fonnte.com/send', [
-            'target' => '6281367924045', // Ganti dengan nomor Kepala Badan
+            'target' => '6282246605465', // Ganti dengan nomor Kepala Badan
             'message' => $pesan,
         ]);
 
