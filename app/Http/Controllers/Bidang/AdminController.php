@@ -26,6 +26,7 @@ class AdminController extends Controller
     }
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'jenis_surat'   => 'required',
             'no_surat'      => 'required',
@@ -43,15 +44,26 @@ class AdminController extends Controller
             'perihal.required' => 'Perihal surat wajib di isi!',
             'file_surat.required' => 'File surat wajib di isi!',
             'file_surat.file' => 'File surat tidak valid!',
-            'file_surat.mimes' => 'File surat harus format pdf!',
-            'file_surat.max' => 'File surat melebihi kapasitas!',
+            'file_surat.mimes' => 'File surat harus format PDF!',
+            'file_surat.max' => 'Ukuran file maksimal 2MB!',
         ]);
 
-        // Upload ke Cloudinary
-        $fileUrl = Cloudinary::upload($request->file('file_surat')->getRealPath(), [
-            'folder' => 'surat_masuk'
-        ])->getSecurePath();
+        // Proses Upload ke Cloudinary
+        if ($request->hasFile('file_surat')) {
+            try {
+                $uploadedFile = Cloudinary::upload($request->file('file_surat')->getRealPath(), [
+                    'folder' => 'surat_masuk'
+                ]);
 
+                $fileUrl = $uploadedFile->getSecurePath();
+            } catch (\Exception $e) {
+                return back()->with('error', 'Gagal upload ke Cloudinary: ' . $e->getMessage());
+            }
+        } else {
+            return back()->with('error', 'File tidak ditemukan.');
+        }
+
+        // Simpan ke database
         SuratMasuk::create([
             'jenis_surat'   => $request->jenis_surat,
             'no_surat'      => $request->no_surat,
@@ -59,15 +71,20 @@ class AdminController extends Controller
             'tanggal_masuk' => $request->tanggal_masuk,
             'asal_surat'    => $request->asal_surat,
             'perihal'       => $request->perihal,
-            'file_surat'    => $fileUrl, // dari Cloudinary
+            'file_surat'    => $fileUrl, // link Cloudinary
             'no_agenda'     => $request->no_agenda,
             'sifat'         => $request->sifat,
             'created_by'    => Auth::id(),
             'status_disposisi' => 'Belum',
         ]);
 
-        // Kirim WA ke Kaban
-        $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi:\nhttps://simakbkad-production-5898.up.railway.app/";
+        // Kirim Notifikasi WhatsApp
+        $pesan = "📩 *Surat Baru Diterima*\n"
+            . "Dari: *{$request->asal_surat}*\n"
+            . "Perihal: *{$request->perihal}*\n"
+            . "Silakan login untuk disposisi:\n"
+            . "https://simakbkad-production-5898.up.railway.app/";
+
         $this->kirimWaKaban($pesan);
 
         return redirect()->route('admin.input_surat')->with('success', 'Surat berhasil ditambahkan!');
