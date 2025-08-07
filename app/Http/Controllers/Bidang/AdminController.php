@@ -28,72 +28,49 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        // ✅ 1. Validasi Input
         $request->validate([
-            'jenis_surat'   => 'required|string|max:100',
-            'no_surat'      => 'required|string|max:100',
-            'tanggal_surat' => 'required|date',
-            'tanggal_masuk' => 'required|date',
-            'asal_surat'    => 'required|string|max:255',
-            'perihal'       => 'required|string|max:255',
-            'file_surat'    => 'required|file|mimes:pdf|max:2048',
-            'no_agenda'     => 'nullable|string|max:50',
-            'sifat'         => 'nullable|string|max:50',
+            'no_surat'       => 'required|string|max:255',
+            'asal_surat'     => 'required|string|max:255',
+            'perihal'        => 'required|string|max:255',
+            'jenis_surat'    => 'required|string',
+            'file_surat'     => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png',
+            'tanggal_surat'  => 'required|date',
+            'tanggal_masuk'  => 'required|date',
+            'no_agenda'      => 'nullable|string|max:255',
+            'sifat'          => 'required|string',
         ]);
 
-        // ✅ 2. Upload ke Cloudinary
-        try {
-            $cloudinary = new Cloudinary([
-                'cloud' => [
-                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                    'api_key'    => env('CLOUDINARY_API_KEY'),
-                    'api_secret' => env('CLOUDINARY_API_SECRET'),
-                ],
-            ]);
+        // Upload file surat
+        $fileName = time() . '_' . $request->file('file_surat')->getClientOriginalName();
+        $request->file('file_surat')->move(public_path('uploads/surat_masuk'), $fileName);
 
-            $uploadResult = $cloudinary->uploadApi()->upload(
-                $request->file('file_surat')->getRealPath(),
-                ['folder' => 'surat_masuk', 'resource_type' => 'auto']
-            );
+        // Simpan ke database
+        $surat = SuratMasuk::create([
+            'no_surat'         => $request->no_surat,
+            'asal_surat'       => $request->asal_surat,
+            'perihal'          => $request->perihal,
+            'jenis_surat'      => $request->jenis_surat,
+            'file_surat'       => $fileName,
+            'tanggal_surat'    => $request->tanggal_surat,
+            'tanggal_masuk'    => $request->tanggal_masuk,
+            'no_agenda'        => $request->no_agenda,
+            'sifat'            => $request->sifat,
+            'created_by'       => Auth::id(), // jika login sebagai admin
+            'status_disposisi' => 'Belum',
+        ]);
 
-            $fileUrl = $uploadResult['secure_url'];
-        } catch (\Exception $e) {
-            Log::error('Upload Cloudinary gagal: ' . $e->getMessage());
-            return back()->with('error', 'Gagal upload ke Cloudinary.');
-        }
+        // Kirim notifikasi WA ke Kepala Badan
+        $pesan = "📩 *Surat Masuk Baru*\n"
+            . "Instansi: *{$surat->asal_surat}*\n"
+            . "No. Surat: *{$surat->no_surat}*\n"
+            . "Perihal: *{$surat->perihal}*\n"
+            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
+            . "Silakan login untuk melakukan disposisi.";
 
-        // ✅ 3. Simpan ke Database
-        try {
-            SuratMasuk::create([
-                'jenis_surat'      => $request->jenis_surat,
-                'no_surat'         => $request->no_surat,
-                'tanggal_surat'    => $request->tanggal_surat,
-                'tanggal_masuk'    => $request->tanggal_masuk,
-                'asal_surat'       => $request->asal_surat,
-                'perihal'          => $request->perihal,
-                'file_surat'       => $fileUrl,
-                'no_agenda'        => $request->no_agenda,
-                'sifat'            => $request->sifat,
-                'created_by'       => Auth::id(),
-                'status_disposisi' => 'Belum',
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Gagal simpan surat masuk: ' . $e->getMessage());
-            return back()->with('error', 'Gagal menyimpan data ke database.');
-        }
+        $this->kirimWaKaban($pesan);
 
-        // ✅ 4. Kirim Notifikasi WhatsApp
-        try {
-            $pesan = "📩 Surat baru masuk dari *{$request->asal_surat}* dengan perihal: *{$request->perihal}*.\nSilakan cek sistem untuk disposisi:\nhttps://simakbkad-production-5898.up.railway.app/";
-            $this->kirimWaKaban($pesan);
-        } catch (\Exception $e) {
-            Log::warning('Gagal kirim WA: ' . $e->getMessage());
-        }
-
-        // ✅ 5. Redirect Sukses
-        return redirect()->route('admin.input_surat')->with('success', 'Surat berhasil ditambahkan!');
+        return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan dan notifikasi terkirim.');
     }
-
 
     public function dataSuratMasuk()
     {
