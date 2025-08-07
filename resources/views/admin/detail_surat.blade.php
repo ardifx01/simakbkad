@@ -1,42 +1,55 @@
 @extends('admin.template')
+
 @section('content')
-    <div class="row col-10">
-        <div class="col-12 text-center mb-3">
-            <h4 class="bg-primary text-white py-2 rounded">Halaman Detail Surat Masuk</h4>
-        </div>
+<div class="row justify-content-center">
+    <div class="col-12 mb-4 text-center">
+        <h4 class="bg-primary text-white py-3 px-4 rounded shadow-sm d-inline-block">📄 Detail Surat Masuk</h4>
+    </div>
 
-        <div id="settings-trigger" title="Kembali ke Data Surat">
-            <a href="{{ route('admin.dataSuratMasuk') }}">
-                <i class="ti-arrow-left"></i>
-            </a>
-        </div>
+    <div class="col-12 mb-3">
+        <a href="{{ route('admin.dataSuratMasuk') }}" class="btn btn-sm btn-outline-secondary">
+            <i class="ti-arrow-left"></i> Kembali ke Data Surat
+        </a>
+    </div>
 
-        <div class="col-md-4">
-            <div class="card border-info mb-3">
-                <div class="card-header bg-info text-white">Detail Surat</div>
-                <div class="card-body">
-                    <p><strong>No. Surat:</strong> {{ $surat->no_surat }}</p>
-                    <p><strong>Tanggal Surat:</strong> {{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d F Y') }}
-                    </p>
-                    <p><strong>Tanggal Diterima:</strong>
-                        {{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d F Y') }}</p>
-                    <p><strong>Perihal:</strong> {{ $surat->perihal }}</p>
-                    <p><strong>Asal Instansi:</strong> {{ $surat->asal_surat }}</p>
-                </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-info text-white">
+                <strong>📝 Detail Surat</strong>
             </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="card border-info mb-3">
-                <div class="card-header bg-info text-white">Tampilan Surat</div>
-                <div class="card-body p-2">
-                    @if ($surat->file_surat)
-                        <embed src="{{ $surat->file_surat }}" width="100%" height="500px" type="application/pdf">
-                    @else
-                        <p class="text-danger">File surat tidak tersedia.</p>
-                    @endif
-                </div>
+            <div class="card-body">
+                <p><strong>No. Surat:</strong><br>{{ $surat->no_surat }}</p>
+                <p><strong>Tanggal Surat:</strong><br>{{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d F Y') }}</p>
+                <p><strong>Tanggal Diterima:</strong><br>{{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d F Y') }}</p>
+                <p><strong>Perihal:</strong><br>{{ $surat->perihal }}</p>
+                <p><strong>Asal Instansi:</strong><br>{{ $surat->asal_surat }}</p>
+                <p><strong>Sifat Surat:</strong><br>{{ $surat->sifat }}</p>
             </div>
         </div>
     </div>
+
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-info text-white">
+                <strong>📎 Preview Surat</strong>
+            </div>
+            <div class="card-body text-center" style="min-height: 300px;">
+                @php
+                    $ext = pathinfo($surat->file_surat, PATHINFO_EXTENSION);
+                @endphp
+
+                @if(in_array(strtolower($ext), ['pdf']))
+                    <embed src="{{ $surat->file_surat }}" width="100%" height="500px" type="application/pdf">
+                @elseif(in_array(strtolower($ext), ['jpg', 'jpeg', 'png']))
+                    <img src="{{ $surat->file_surat }}" class="img-fluid rounded border" alt="Preview Surat">
+                @else
+                    <p class="text-muted">File tidak dapat ditampilkan.</p>
+                    <a href="{{ $surat->file_surat }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <i class="ti-download"></i> Download File
+                    </a>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
