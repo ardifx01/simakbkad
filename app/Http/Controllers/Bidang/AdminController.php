@@ -67,7 +67,7 @@ class AdminController extends Controller
             'tanggal_masuk'    => $request->tanggal_masuk,
             'no_agenda'        => $request->no_agenda,
             'sifat'            => $request->sifat,
-            'created_by'       => auth()->id(),
+            'created_by'       => Auth::id(),
             'status_disposisi' => 'Belum',
         ]);
 
@@ -76,7 +76,9 @@ class AdminController extends Controller
             . "No. Surat: *{$surat->no_surat}*\n"
             . "Perihal: *{$surat->perihal}*\n"
             . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
-            . "Silakan login untuk melakukan disposisi.";
+            . "Silakan login untuk melakukan disposisi:\n"
+            . "https://simakbkad-production-5898.up.railway.app/";
+
 
         $this->kirimWaKaban($pesan);
 
