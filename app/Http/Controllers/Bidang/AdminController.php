@@ -57,7 +57,6 @@ class AdminController extends Controller
             );
 
             $fileUrl = $uploadResult['secure_url'];
-            $publicId = $uploadResult['public_id']; // jika ingin simpan untuk delete nanti
         } catch (\Exception $e) {
             Log::error('Upload Cloudinary gagal: ' . $e->getMessage());
             return back()->with('error', 'Gagal upload ke Cloudinary.');
@@ -73,7 +72,6 @@ class AdminController extends Controller
                 'asal_surat'       => $request->asal_surat,
                 'perihal'          => $request->perihal,
                 'file_surat'       => $fileUrl,
-                'public_id'        => $publicId ?? null, // opsional jika mau simpan
                 'no_agenda'        => $request->no_agenda,
                 'sifat'            => $request->sifat,
                 'created_by'       => Auth::id(),
