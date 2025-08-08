@@ -53,10 +53,10 @@
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                                 </div>
-                                <div class="text-center mt-4 font-weight-light">
+                                {{-- <div class="text-center mt-4 font-weight-light">
                                     Belum Punya Akun? <a href="{{ route('register') }}" class="text-primary">Buat
                                         akun!</a>
-                                </div>
+                                </div> --}}
                             </form>
 
                         </div>
