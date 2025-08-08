@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'nama' => 'Rivaja Simbolon',
-            'email' => 'admin@gamail.com',
+            'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('admin@123'),
             'remember_token' => Str::random(10),
