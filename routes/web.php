@@ -7,6 +7,7 @@ use App\Http\Controllers\Bidang\AdminController;
 use App\Http\Controllers\Bidang\KepalaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
+use App\Http\Controllers\SekretarisController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\UsersController;
 
@@ -63,6 +64,17 @@ Route::middleware(['auth', 'role:Kepala Badan'])->group(function () {
     Route::get('/kepala/suratmasuk/{id}/detail', [KepalaController::class, 'show'])->name('kepala.suratmasuk.detail');
     Route::post('/kepala/disposisi/simpan', [DisposisiController::class, 'store'])->name('kepala.suratmasuk.disposisi');
 });
+
+
+// === Sekretaris ===
+Route::middleware(['auth', 'role:Sekretaris'])->group(function () {
+    Route::get('/sekretaris/dashboard', fn() => view('sekretaris.dashboard'))->name('sekretaris.dashboard');
+    Route::get('/sekretaris/dataSuratMasuk', [SekretarisController::class, 'dataSuratMasuk'])->name('sekretaris.dataSuratMasuk');
+    Route::get('/sekretaris/suratmasuk/{id}/detail', [SekretarisController::class, 'show'])->name('sekretaris.suratmasuk.detail');
+    Route::get('/sekretaris/disposisi/{id}/detail', [SekretarisController::class, 'detailDisposisi'])->name('sekretaris.disposisi.detail');
+    Route::post('/sekretaris/distribusi/store', [SekretarisController::class, 'store'])->name('sekretaris.distribusi.store');
+});
+
 
 // === Bidang Aset ===
 Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {

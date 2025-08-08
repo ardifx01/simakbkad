@@ -33,38 +33,45 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('roles')->insert([
             'id' => 3,
-            'nama_role' => 'Bidang Asset',
+            'nama_role' => 'Sekretaris',
             'role_id' => 3,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('roles')->insert([
             'id' => 4,
-            'nama_role' => 'Bidang Akuntansi',
+            'nama_role' => 'Bidang Asset',
             'role_id' => 4,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('roles')->insert([
             'id' => 5,
-            'nama_role' => 'Bidang Anggaran',
+            'nama_role' => 'Bidang Akuntansi',
             'role_id' => 5,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('roles')->insert([
             'id' => 6,
-            'nama_role' => 'Bidang Pembendaharaan',
+            'nama_role' => 'Bidang Anggaran',
             'role_id' => 6,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('roles')->insert([
+            'id' => 7,
+            'nama_role' => 'Bidang Pembendaharaan',
+            'role_id' => 7,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('users')->insert([
-            'nama' => 'Test User',
-            'email' => 'test@example.com',
+            'nama' => 'Rivaja Simbolon',
+            'email' => 'admin@gamail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('admin@123'),
             'remember_token' => Str::random(10),
             'role_id' => 1,
             'bidang_id' => null,

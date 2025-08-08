@@ -39,6 +39,8 @@ class LoginController extends Controller
                     return redirect()->route('admin.dashboard');
                 case 'Kepala Badan':
                     return redirect()->route('kepala.dashboard');
+                case 'Sekretaris':
+                    return redirect()->route('sekretaris.dashboard');
                 case 'Bidang Asset':
                     return redirect()->route('asset.dashboard');
                 case 'Bidang Akuntansi':

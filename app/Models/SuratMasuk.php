@@ -37,6 +37,6 @@ class SuratMasuk extends Model
     // Relasi ke disposisi (satu surat hanya punya satu disposisi)
     public function disposisi()
     {
-        return $this->hasOne(Disposisi::class, 'surat_masuk_id');
+        return $this->hasOne(Disposisi::class, 'surat_id');
     }
 }

@@ -26,4 +26,8 @@ class Disposisi extends Model
         'tanggal',
         'tindakan',
     ];
+    public function pengirim()
+    {
+        return $this->belongsTo(User::class, 'dari_id');
+    }
 }
