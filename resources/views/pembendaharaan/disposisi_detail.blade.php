@@ -1,4 +1,4 @@
-@extends('asset.template')
+@extends('pembendaharaan.template')
 
 @section('content')
     <div class="row col-10">
@@ -6,7 +6,7 @@
             <h4 class="bg-success text-black py-2 rounded">Detail Disposisi Surat Masuk</h4>
         </div>
         <div id="settings-trigger" title="Kembali ke Data Surat">
-            <a href="{{ route('asset.disposisi.index') }}">
+            <a href="{{ route('pembendaharaan.disposisi.index') }}">
                 <i class="ti-arrow-left"></i>
             </a>
         </div>
@@ -38,7 +38,7 @@
                     <div class="border p-2 bg-light rounded">
                         {{ $distribusi_surat->catatan_sekretaris ?? '-' }}
                     </div>
-                    {{-- Tombol Selesai --}}
+                     {{-- Tombol Selesai --}}
                     <div class="mt-3">
                         <a href="{{ route('kabid.disposisi.selesai', $disposisi->surat->id) }}" class="btn btn-success"
                             onclick="return confirm('Yakin terima surat?')">

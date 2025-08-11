@@ -29,11 +29,14 @@
                                 <th>Perihal</th>
                                 <th>Sifat</th>
                                 <th>Disposisi</th>
+                                <th>Status Kabid</th> {{-- kolom baru --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($surats as $index => $surat)
-                                <tr class="clickable-row" data-href="{{ route('admin.suratmasuk.detail', $surat->id) }}" style="cursor: pointer;" title="Klik untuk melihat ringkasannya!">
+                                <tr class="clickable-row" data-href="{{ route('admin.suratmasuk.detail', $surat->id) }}"
+                                    style="cursor: pointer;" title="Klik untuk melihat ringkasannya!">
+
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $surat->jenis_surat }}</td>
                                     <td>{{ $surat->no_surat }}</td>
@@ -54,9 +57,17 @@
                                             <label class="badge badge-success">Selesai</label>
                                         @endif
                                     </td>
+                                    <td>
+                                        @if ($surat->status_kabid == 'Selesai')
+                                            <label class="badge badge-success">Selesai</label>
+                                        @else
+                                            <label class="badge badge-secondary">Proses</label>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
                 </div>
 
@@ -64,5 +75,3 @@
         </div>
     </div>
 @endsection
-
-

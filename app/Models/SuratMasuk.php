@@ -24,6 +24,7 @@ class SuratMasuk extends Model
         'sifat',
         'created_by',
         'status_disposisi',
+        'status_kabid',
     ];
 
 
@@ -39,4 +40,10 @@ class SuratMasuk extends Model
     {
         return $this->hasOne(Disposisi::class, 'surat_id');
     }
+    // Relasi ke Distribusi
+    public function distribusi()
+    {
+        return $this->hasMany(DistribusiSurat::class, 'surat_id');
+    }
+    public function arsip() {}
 }

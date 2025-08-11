@@ -1,4 +1,4 @@
-@extends('asset.template')
+@extends('anggaran.template')
 
 @section('content')
     <div class="row col-10">
@@ -6,7 +6,7 @@
             <h4 class="bg-success text-black py-2 rounded">Detail Disposisi Surat Masuk</h4>
         </div>
         <div id="settings-trigger" title="Kembali ke Data Surat">
-            <a href="{{ route('asset.disposisi.index') }}">
+            <a href="{{ route('anggaran.disposisi.index') }}">
                 <i class="ti-arrow-left"></i>
             </a>
         </div>

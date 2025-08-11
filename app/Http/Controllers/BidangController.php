@@ -2,14 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArsipSurat;
 use App\Models\Bidang;
+use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BidangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function selesai($id)
+    {
+        // Cari surat
+        $surat = SuratMasuk::findOrFail($id);
+
+        // Cek kalau sudah selesai, jangan update lagi
+        if ($surat->status_kabid == 'Selesai') {
+            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+        }
+
+        // Update status kabid
+        $surat->update([
+            'status_kabid' => 'Selesai'
+        ]);
+
+        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    }
+
+
     public function index()
     {
         //

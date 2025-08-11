@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('kepada_bidang'); // Menggunakan text untuk menyimpan array bidang (hasil implode)
             $table->text('isi_disposisi');
             $table->date('tanggal');
+            $table->text('tindakan');
             $table->timestamps();
         });
     }

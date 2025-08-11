@@ -21,6 +21,8 @@
                             Masuk</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('admin.suratmasuk.disposisi') }}">Disposisi Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('admin.suratmasuk.selesai') }}">Arsip Surat</a></li>
                 </ul>
             </div>
         </li>

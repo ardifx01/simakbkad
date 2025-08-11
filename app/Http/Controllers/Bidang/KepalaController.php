@@ -21,6 +21,11 @@ class KepalaController extends Controller
         $surat = SuratMasuk::findOrFail($id);
         return view('kepala.detail_surat', compact('surat'));
     }
+
+
+
+
+    
     // public function store(Request $request)
     // {
     //     $request->validate([

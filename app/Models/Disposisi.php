@@ -30,4 +30,10 @@ class Disposisi extends Model
     {
         return $this->belongsTo(User::class, 'dari_id');
     }
+    public function kabidTujuan()
+    {
+        return $this->belongsToMany(User::class, 'disposisi_kabid', 'disposisi_id', 'kabid_id')
+            ->withPivot('status', 'tanggal_selesai')
+            ->withTimestamps();
+    }
 }

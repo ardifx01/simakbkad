@@ -41,7 +41,7 @@
             <div class="card border-warning mb-3">
                 <div class="card-header text-white" style="background-color: #4f7ba2;">Distribusikan Surat</div>
                 <div class="card-body">
-                        <form action="{{ route('sekretaris.distribusi.store') }}" method="POST">
+                        <form action="{{ route('sekretaris.suratmasuk.storeDistribusi') }}" method="POST">
                         @csrf
                         <input type="hidden" name="surat_id" value="{{ $surat->id }}">
 

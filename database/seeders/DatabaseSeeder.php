@@ -78,5 +78,71 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('users')->insert([
+            'nama' => 'Kepala Badan',
+            'email' => 'kaban@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('kaban@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 2,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'Sekretaris',
+            'email' => 'sekretaris@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('sekretaris@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 3,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'Bidang Assets',
+            'email' => 'asset@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('asset@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 4,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'Bidang Akuntansi',
+            'email' => 'akuntansi@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('akuntansi@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 5,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'Bidang Penganggaran',
+            'email' => 'anggaran@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('anggaran@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 6,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'Bidang Pembendaharaan',
+            'email' => 'bendahara@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('anggaran@123'),
+            'remember_token' => Str::random(10),
+            'role_id' => 7,
+            'bidang_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

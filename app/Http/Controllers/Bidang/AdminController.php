@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bidang;
 
 use App\Http\Controllers\Controller;
+use App\Models\ArsipSurat;
 use App\Models\SuratMasuk;
 use App\Models\User;
 use Cloudinary\Cloudinary;
@@ -85,6 +86,13 @@ class AdminController extends Controller
     //     return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
     // }
 
+    public function arsip_surat()
+    {
+        $arsips = ArsipSurat::with('surat')->get();
+        return view('admin.arsip', compact('arsips'));
+    }
+
+
     public function store(Request $request)
     {
         // Validasi hanya file PDF
@@ -117,7 +125,7 @@ class AdminController extends Controller
         $uploadResult = $cloudinary->uploadApi()->upload(
             $file->getRealPath(),
             [
-                'folder' => 'surat_masuk',
+                'folder' => 'surat_masuk_bkad_dairi',
                 'resource_type' => 'raw',
                 'public_id' => $originalName, // nama tanpa ekstensi
                 'format' => 'pdf',            // pastikan .pdf

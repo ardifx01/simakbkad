@@ -5,9 +5,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Bidang\AdminController;
 use App\Http\Controllers\Bidang\KepalaController;
+use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
+use App\Http\Controllers\DistribusiController;
 use App\Http\Controllers\SekretarisController;
+use App\Http\Controllers\SekretarisDistribusiController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\UsersController;
 
@@ -54,6 +57,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/tambahUser', [UsersController::class, 'index'])->name('admin.tambahPengguna');
     Route::post('/admin/tambahUser', [UsersController::class, 'store'])->name('admin.user.store');
     Route::patch('/admin/user/{id}/toggle', [UsersController::class, 'toggleStatus'])->name('admin.user.toggleStatus');
+    Route::get('/admin/suratmasuk/selesai', [AdminController::class, 'arsip_surat'])->name('admin.suratmasuk.selesai');
 });
 
 
@@ -72,7 +76,7 @@ Route::middleware(['auth', 'role:Sekretaris'])->group(function () {
     Route::get('/sekretaris/dataSuratMasuk', [SekretarisController::class, 'dataSuratMasuk'])->name('sekretaris.dataSuratMasuk');
     Route::get('/sekretaris/suratmasuk/{id}/detail', [SekretarisController::class, 'show'])->name('sekretaris.suratmasuk.detail');
     Route::get('/sekretaris/disposisi/{id}/detail', [SekretarisController::class, 'detailDisposisi'])->name('sekretaris.disposisi.detail');
-    Route::post('/sekretaris/distribusi/store', [SekretarisController::class, 'store'])->name('sekretaris.distribusi.store');
+    Route::post('/sekretaris/suratmasuk/distribusi', [SekretarisController::class, 'storeDistribusi'])->name('sekretaris.suratmasuk.storeDistribusi');
 });
 
 
@@ -81,8 +85,7 @@ Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
     Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
     Route::get('/asset/disposisi', [DisposisiController::class, 'disposisiAsset'])->name('asset.disposisi.index');
     Route::get('/asset/disposisi/{id}/detail', [DisposisiController::class, 'detailAsset'])->name('asset.disposisi.detail');
-    Route::get('/asset/tindaklanjut/{id}/create', [TindakLanjutController::class, 'create'])->name('asset.tindaklanjut.create');
-    Route::post('/asset/tindaklanjut/{id}/store', [TindakLanjutController::class, 'store'])->name('asset.tindaklanjut.store');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])->name('kabid.disposisi.selesai');    
 });
 
 
@@ -90,6 +93,9 @@ Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
 Route::middleware(['auth', 'role:Bidang Akuntansi'])->group(function () {
     Route::get('/akuntansi/dashboard', fn() => view('akuntansi.dashboard'))->name('akuntansi.dashboard');
     Route::get('/akuntansi/disposisi', [DisposisiController::class, 'disposisiAkuntansi'])->name('akuntansi.disposisi.index');
+    Route::get('/akuntansi/disposisi/{id}/detail', [DisposisiController::class, 'detailAkuntansi'])->name('akuntansi.disposisi.detail');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
+    ->name('kabid.disposisi.selesai');
 });
 
 
@@ -97,6 +103,10 @@ Route::middleware(['auth', 'role:Bidang Akuntansi'])->group(function () {
 Route::middleware(['auth', 'role:Bidang Anggaran'])->group(function () {
     Route::get('/anggaran/dashboard', fn() => view('anggaran.dashboard'))->name('anggaran.dashboard');
     Route::get('/anggaran/disposisi', [DisposisiController::class, 'disposisiAnggaran'])->name('anggaran.disposisi.index');
+    Route::get('/anggaran/disposisi/{id}/detail', [DisposisiController::class, 'detailAnggaran'])->name('anggaran.disposisi.detail');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
+    ->name('kabid.disposisi.selesai');
+
 });
 
 
@@ -104,6 +114,9 @@ Route::middleware(['auth', 'role:Bidang Anggaran'])->group(function () {
 Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
     Route::get('/pembendaharaan/dashboard', fn() => view('pembendaharaan.dashboard'))->name('pembendaharaan.dashboard');
     Route::get('/pembendaharaan/disposisi', [DisposisiController::class, 'disposisiPembendaharaan'])->name('pembendaharaan.disposisi.index');
+    Route::get('/pembendaharaan/disposisi/{id}/detail', [DisposisiController::class, 'detailPembendaharaan'])->name('pembendaharaan.disposisi.detail');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
+    ->name('kabid.disposisi.selesai');
 });
 
 
