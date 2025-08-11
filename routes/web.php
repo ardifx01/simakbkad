@@ -85,7 +85,7 @@ Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
     Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
     Route::get('/asset/disposisi', [DisposisiController::class, 'disposisiAsset'])->name('asset.disposisi.index');
     Route::get('/asset/disposisi/{id}/detail', [DisposisiController::class, 'detailAsset'])->name('asset.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])->name('kabid.disposisi.selesai');    
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai1'])->name('kabid.disposisi.selesai');    
 });
 
 
@@ -94,8 +94,7 @@ Route::middleware(['auth', 'role:Bidang Akuntansi'])->group(function () {
     Route::get('/akuntansi/dashboard', fn() => view('akuntansi.dashboard'))->name('akuntansi.dashboard');
     Route::get('/akuntansi/disposisi', [DisposisiController::class, 'disposisiAkuntansi'])->name('akuntansi.disposisi.index');
     Route::get('/akuntansi/disposisi/{id}/detail', [DisposisiController::class, 'detailAkuntansi'])->name('akuntansi.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
-    ->name('kabid.disposisi.selesai');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai2'])->name('kabid.disposisi.selesai');
 });
 
 
@@ -115,8 +114,7 @@ Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
     Route::get('/pembendaharaan/dashboard', fn() => view('pembendaharaan.dashboard'))->name('pembendaharaan.dashboard');
     Route::get('/pembendaharaan/disposisi', [DisposisiController::class, 'disposisiPembendaharaan'])->name('pembendaharaan.disposisi.index');
     Route::get('/pembendaharaan/disposisi/{id}/detail', [DisposisiController::class, 'detailPembendaharaan'])->name('pembendaharaan.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
-    ->name('kabid.disposisi.selesai');
+    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai3'])->name('kabid.disposisi.selesai');
 });
 
 

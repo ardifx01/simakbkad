@@ -28,6 +28,57 @@ class BidangController extends Controller
 
         return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
     }
+    public function selesai1($id)
+    {
+        // Cari surat
+        $surat = SuratMasuk::findOrFail($id);
+
+        // Cek kalau sudah selesai, jangan update lagi
+        if ($surat->status_kabid == 'Selesai') {
+            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+        }
+
+        // Update status kabid
+        $surat->update([
+            'status_kabid' => 'Selesai'
+        ]);
+
+        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    }
+    public function selesai2($id)
+    {
+        // Cari surat
+        $surat = SuratMasuk::findOrFail($id);
+
+        // Cek kalau sudah selesai, jangan update lagi
+        if ($surat->status_kabid == 'Selesai') {
+            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+        }
+
+        // Update status kabid
+        $surat->update([
+            'status_kabid' => 'Selesai'
+        ]);
+
+        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    }
+    public function selesai3($id)
+    {
+        // Cari surat
+        $surat = SuratMasuk::findOrFail($id);
+
+        // Cek kalau sudah selesai, jangan update lagi
+        if ($surat->status_kabid == 'Selesai') {
+            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+        }
+
+        // Update status kabid
+        $surat->update([
+            'status_kabid' => 'Selesai'
+        ]);
+
+        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    }
 
 
     public function index()

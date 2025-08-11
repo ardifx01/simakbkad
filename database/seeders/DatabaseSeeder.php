@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Bidang Pembendaharaan',
             'email' => 'bendahara@gmail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('anggaran@123'),
+            'password' => bcrypt('bendahara@123'),
             'remember_token' => Str::random(10),
             'role_id' => 7,
             'bidang_id' => null,
