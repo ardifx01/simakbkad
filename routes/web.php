@@ -60,7 +60,6 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/suratmasuk/selesai', [AdminController::class, 'arsip_surat'])->name('admin.suratmasuk.selesai');
 });
 
-
 // === Kepala Badan ===
 Route::middleware(['auth', 'role:Kepala Badan'])->group(function () {
     Route::get('/kepala/dashboard', fn() => view('kepala.dashboard'))->name('kepala.dashboard');
@@ -68,7 +67,6 @@ Route::middleware(['auth', 'role:Kepala Badan'])->group(function () {
     Route::get('/kepala/suratmasuk/{id}/detail', [KepalaController::class, 'show'])->name('kepala.suratmasuk.detail');
     Route::post('/kepala/disposisi/simpan', [DisposisiController::class, 'store'])->name('kepala.suratmasuk.disposisi');
 });
-
 
 // === Sekretaris ===
 Route::middleware(['auth', 'role:Sekretaris'])->group(function () {
@@ -85,7 +83,7 @@ Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
     Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
     Route::get('/asset/disposisi', [DisposisiController::class, 'disposisiAsset'])->name('asset.disposisi.index');
     Route::get('/asset/disposisi/{id}/detail', [DisposisiController::class, 'detailAsset'])->name('asset.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai1'])->name('kabid.disposisi.selesai');    
+    // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai1'])->name('kabid.disposisi.selesai');    
 });
 
 
@@ -94,7 +92,7 @@ Route::middleware(['auth', 'role:Bidang Akuntansi'])->group(function () {
     Route::get('/akuntansi/dashboard', fn() => view('akuntansi.dashboard'))->name('akuntansi.dashboard');
     Route::get('/akuntansi/disposisi', [DisposisiController::class, 'disposisiAkuntansi'])->name('akuntansi.disposisi.index');
     Route::get('/akuntansi/disposisi/{id}/detail', [DisposisiController::class, 'detailAkuntansi'])->name('akuntansi.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai2'])->name('kabid.disposisi.selesai');
+    // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai2'])->name('kabid.disposisi.selesai');
 });
 
 
@@ -103,8 +101,7 @@ Route::middleware(['auth', 'role:Bidang Anggaran'])->group(function () {
     Route::get('/anggaran/dashboard', fn() => view('anggaran.dashboard'))->name('anggaran.dashboard');
     Route::get('/anggaran/disposisi', [DisposisiController::class, 'disposisiAnggaran'])->name('anggaran.disposisi.index');
     Route::get('/anggaran/disposisi/{id}/detail', [DisposisiController::class, 'detailAnggaran'])->name('anggaran.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai'])
-    ->name('kabid.disposisi.selesai');
+    // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai3'])->name('kabid.disposisi.selesai');
 
 });
 
@@ -114,7 +111,11 @@ Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
     Route::get('/pembendaharaan/dashboard', fn() => view('pembendaharaan.dashboard'))->name('pembendaharaan.dashboard');
     Route::get('/pembendaharaan/disposisi', [DisposisiController::class, 'disposisiPembendaharaan'])->name('pembendaharaan.disposisi.index');
     Route::get('/pembendaharaan/disposisi/{id}/detail', [DisposisiController::class, 'detailPembendaharaan'])->name('pembendaharaan.disposisi.detail');
-    Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai3'])->name('kabid.disposisi.selesai');
+    // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai4'])->name('kabid.disposisi.selesai');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/disposisi/selesai/{id}', [BidangController::class, 'selesai'])->name('kabid.disposisi.selesai');
 });
 
 
@@ -126,3 +127,13 @@ Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
+
+// Route::get('/test-backblaze', function () {
+//     // Upload file ke Backblaze
+//     Storage::disk('s3')->put('coba.txt', 'Halo dari Laravel ke Backblaze!');
+    
+//     // Ambil URL file
+//     $url = Storage::disk('s3')->url('coba.txt');
+    
+//     return $url;
+// });

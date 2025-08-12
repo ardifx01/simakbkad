@@ -32,7 +32,11 @@
                     <div class="card-body">
                         <p><strong>Kepada:</strong> {{ $disposisiKaban->kepada_bidang }}</p>
                         <p><strong>Catatan:</strong> {{ $disposisiKaban->isi_disposisi }}</p>
-                        <p><strong>Tindakan:</strong> {{ $disposisiKaban->tindakan }}</p>
+                        <p><strong>Tindakan:</strong>
+                            @foreach (explode(',', $disposisiKaban->tindakan) as $item)
+                                <span class="badge badge-info mb-1">{{ trim($item) }}</span>
+                            @endforeach
+                        </p>
                     </div>
                 </div>
             @endif
@@ -41,7 +45,7 @@
             <div class="card border-warning mb-3">
                 <div class="card-header text-white" style="background-color: #4f7ba2;">Distribusikan Surat</div>
                 <div class="card-body">
-                        <form action="{{ route('sekretaris.suratmasuk.storeDistribusi') }}" method="POST">
+                    <form action="{{ route('sekretaris.suratmasuk.storeDistribusi') }}" method="POST">
                         @csrf
                         <input type="hidden" name="surat_id" value="{{ $surat->id }}">
 
@@ -82,8 +86,8 @@
             <div class="card border-info mb-3">
                 <div class="card-header text-white" style="background-color: #4f7ba2;">File Surat</div>
                 <div class="card-body p-2">
-                    <embed src="{{ asset('storage/' . $surat->file_surat) }}" width="100%" height="500px"
-                        type="application/pdf">
+                    <embed src="{{ asset('storage/' . $surat->file_surat) }}" type="application/pdf" width="100%"
+                        height="500px" />
                 </div>
             </div>
         </div>

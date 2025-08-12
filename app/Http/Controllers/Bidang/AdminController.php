@@ -92,6 +92,76 @@ class AdminController extends Controller
         return view('admin.arsip', compact('arsips'));
     }
 
+    // public function store(Request $request)
+    // {
+    //     // Validasi hanya file PDF
+    //     $request->validate([
+    //         'no_surat'       => 'required|string|max:255',
+    //         'asal_surat'     => 'required|string|max:255',
+    //         'perihal'        => 'required|string|max:255',
+    //         'jenis_surat'    => 'required|string',
+    //         'file_surat'     => 'required|file|mimes:pdf|max:5120', // hanya PDF
+    //         'tanggal_surat'  => 'required|date',
+    //         'tanggal_masuk'  => 'required|date',
+    //         'no_agenda'      => 'nullable|string|max:255',
+    //         'sifat'          => 'required|string',
+    //     ]);
+
+    //     // Inisialisasi Cloudinary
+    //     $cloudinary = new \Cloudinary\Cloudinary([
+    //         'cloud' => [
+    //             'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+    //             'api_key'    => env('CLOUDINARY_API_KEY'),
+    //             'api_secret' => env('CLOUDINARY_API_SECRET'),
+    //         ],
+    //     ]);
+
+    //     // Ambil file & nama asli
+    //     $file = $request->file('file_surat');
+    //     $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+    //     // Upload ke Cloudinary sebagai raw dengan public_id yang ada .pdf
+    //     $uploadResult = $cloudinary->uploadApi()->upload(
+    //         $file->getRealPath(),
+    //         [
+    //             'folder' => 'surat_masuk_bkad_dairi',
+    //             'resource_type' => 'raw',
+    //             'public_id' => $originalName, // nama tanpa ekstensi
+    //             'format' => 'pdf',            // pastikan .pdf
+    //             'overwrite' => true
+    //         ]
+    //     );
+
+    //     $fileUrl = $uploadResult['secure_url'];
+
+    //     // Simpan ke database
+    //     $surat = SuratMasuk::create([
+    //         'no_surat'         => $request->no_surat,
+    //         'asal_surat'       => $request->asal_surat,
+    //         'perihal'          => $request->perihal,
+    //         'jenis_surat'      => $request->jenis_surat,
+    //         'file_surat'       => $fileUrl,
+    //         'tanggal_surat'    => $request->tanggal_surat,
+    //         'tanggal_masuk'    => $request->tanggal_masuk,
+    //         'no_agenda'        => $request->no_agenda,
+    //         'sifat'            => $request->sifat,
+    //         'created_by'       => Auth::id(),
+    //         'status_disposisi' => 'Belum',
+    //     ]);
+
+    //     // Kirim notifikasi ke Kepala Badan
+    //     $pesan = "📩 *Surat Masuk Baru*\n"
+    //         . "Instansi: *{$surat->asal_surat}*\n"
+    //         . "No. Surat: *{$surat->no_surat}*\n"
+    //         . "Perihal: *{$surat->perihal}*\n"
+    //         . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
+    //         . "Silakan login untuk melakukan disposisi:\n"
+    //         . "https://simakbkad-production-5898.up.railway.app/";
+
+    //     $this->kirimWaKaban($pesan);
+
+    //     return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
+    // }
 
     public function store(Request $request)
     {
@@ -108,40 +178,18 @@ class AdminController extends Controller
             'sifat'          => 'required|string',
         ]);
 
-        // Inisialisasi Cloudinary
-        $cloudinary = new \Cloudinary\Cloudinary([
-            'cloud' => [
-                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                'api_key'    => env('CLOUDINARY_API_KEY'),
-                'api_secret' => env('CLOUDINARY_API_SECRET'),
-            ],
-        ]);
-
-        // Ambil file & nama asli
+        // Simpan file ke storage/app/public/surat_masuk
         $file = $request->file('file_surat');
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('surat_masuk', $fileName, 'public'); // hanya path relatif
 
-        // Upload ke Cloudinary sebagai raw dengan public_id yang ada .pdf
-        $uploadResult = $cloudinary->uploadApi()->upload(
-            $file->getRealPath(),
-            [
-                'folder' => 'surat_masuk_bkad_dairi',
-                'resource_type' => 'raw',
-                'public_id' => $originalName, // nama tanpa ekstensi
-                'format' => 'pdf',            // pastikan .pdf
-                'overwrite' => true
-            ]
-        );
-
-        $fileUrl = $uploadResult['secure_url'];
-
-        // Simpan ke database
+        // Simpan ke database (tanpa full URL)
         $surat = SuratMasuk::create([
             'no_surat'         => $request->no_surat,
             'asal_surat'       => $request->asal_surat,
             'perihal'          => $request->perihal,
             'jenis_surat'      => $request->jenis_surat,
-            'file_surat'       => $fileUrl,
+            'file_surat'       => $path, // contoh: "surat_masuk/namafile.pdf"
             'tanggal_surat'    => $request->tanggal_surat,
             'tanggal_masuk'    => $request->tanggal_masuk,
             'no_agenda'        => $request->no_agenda,
@@ -163,6 +211,8 @@ class AdminController extends Controller
 
         return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
     }
+
+
 
 
 

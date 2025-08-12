@@ -21,8 +21,6 @@
                             Masuk</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('admin.suratmasuk.disposisi') }}">Disposisi Masuk</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('admin.suratmasuk.selesai') }}">Arsip Surat</a></li>
                 </ul>
             </div>
         </li>
@@ -30,13 +28,15 @@
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                 aria-controls="form-elements">
                 <i class="ti-stats-up menu-icon"></i>
-                <span class="menu-title">Pemantauan Surat</span>
+                <span class="menu-title">Arsip</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link"
-                            href="{{ asset('assets/pages/forms/basic_elements.html') }}">Pelacakan Surat</a></li>
+                            href="{{ route('admin.suratmasuk.selesai') }}">Arsip Surat</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                            href="">Ekspedisi Surat</a></li>
                 </ul>
             </div>
         </li>

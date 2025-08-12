@@ -113,7 +113,9 @@ class DisposisiController extends Controller
     public function detailAsset($id)
     {
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
-        return view('asset.disposisi_detail', compact('disposisi'));
+        $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+        $surat = SuratMasuk::findOrFail($id);
+        return view('asset.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
     }
 
 
@@ -141,7 +143,9 @@ class DisposisiController extends Controller
         // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
         $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
 
-        return view('akuntansi.disposisi_detail', compact('disposisi', 'distribusi_surat'));
+         $surat = SuratMasuk::findOrFail($id);
+
+        return view('akuntansi.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
     }
 
 
@@ -170,7 +174,8 @@ class DisposisiController extends Controller
         // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
         $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
 
-        return view('anggaran.disposisi_detail', compact('disposisi', 'distribusi_surat'));
+        $surat = SuratMasuk::findOrFail($id);
+        return view('anggaran.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
     }
 
 
@@ -200,6 +205,7 @@ class DisposisiController extends Controller
         // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
         $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
 
-        return view('pembendaharaan.disposisi_detail', compact('disposisi', 'distribusi_surat'));
+        $surat = SuratMasuk::findOrFail($id);
+        return view('pembendaharaan.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
     }
 }

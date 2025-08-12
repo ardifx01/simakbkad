@@ -122,8 +122,8 @@
                     <strong>Tampilan Surat</strong>
                 </div>
                 <div class="card-body p-2">
-                    <embed src="{{ asset('uploads/surat_masuk/' . $surat->file_surat) }}" width="100%" height="600px"
-                        type="application/pdf">
+                     <embed src="{{ asset('storage/' . $surat->file_surat) }}" type="application/pdf" width="100%"
+                            height="500px" />
                 </div>
             </div>
         </div>

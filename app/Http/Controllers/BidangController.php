@@ -11,74 +11,99 @@ use Illuminate\Support\Facades\DB;
 
 class BidangController extends Controller
 {
+    // public function selesai1($id)
+    // {
+    //     // Cari surat
+    //     $surat = SuratMasuk::findOrFail($id);
+
+    //     // Cek kalau sudah selesai, jangan update lagi
+    //     if ($surat->status_kabid == 'Selesai') {
+    //         return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+    //     }
+
+    //     // Update status kabid
+    //     $surat->update([
+    //         'status_kabid' => 'Selesai'
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    // }
+    // public function selesai2($id)
+    // {
+    //     // Cari surat
+    //     $surat = SuratMasuk::findOrFail($id);
+
+    //     // Cek kalau sudah selesai, jangan update lagi
+    //     if ($surat->status_kabid == 'Selesai') {
+    //         return redirect()->back()->with('info', 'Opss.., Surat ini sudah selesai sebelumnya.');
+    //     }
+
+    //     // Update status kabid
+    //     $surat->update([
+    //         'status_kabid' => 'Selesai'
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    // }
+    // public function selesai3($id)
+    // {
+    //     // Cari surat
+    //     $surat = SuratMasuk::findOrFail($id);
+
+    //     // Cek kalau sudah selesai, jangan update lagi
+    //     if ($surat->status_kabid == 'Selesai') {
+    //         return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+    //     }
+
+    //     // Update status kabid
+    //     $surat->update([
+    //         'status_kabid' => 'Selesai'
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    // }
+    // public function selesai4($id)
+    // {
+    //     // Cari surat
+    //     $surat = SuratMasuk::findOrFail($id);
+
+    //     // Cek kalau sudah selesai, jangan update lagi
+    //     if ($surat->status_kabid == 'Selesai') {
+    //         return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+    //     }
+
+    //     // Update status kabid
+    //     $surat->update([
+    //         'status_kabid' => 'Selesai'
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+    // }
+
+
     public function selesai($id)
     {
-        // Cari surat
         $surat = SuratMasuk::findOrFail($id);
 
-        // Cek kalau sudah selesai, jangan update lagi
-        if ($surat->status_kabid == 'Selesai') {
-            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
+        // Cek kalau sudah selesai
+        if ($surat->status_kabid === 'Selesai') {
+            return redirect()->back()->with('info', 'Opss.. Surat ini sudah selesai sebelumnya.');
         }
 
-        // Update status kabid
-        $surat->update([
-            'status_kabid' => 'Selesai'
-        ]);
+        // Ambil role user login
+        $role = Auth::user()->role->nama_role;
 
-        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
+        // Update status jadi selesai
+        $surat->status_kabid = 'Selesai';
+        $surat->save();
+
+        return redirect()->back()->with(
+            'success',
+            'Surat telah ditandai sebagai selesai oleh ' . $role
+        );
     }
-    public function selesai1($id)
-    {
-        // Cari surat
-        $surat = SuratMasuk::findOrFail($id);
 
-        // Cek kalau sudah selesai, jangan update lagi
-        if ($surat->status_kabid == 'Selesai') {
-            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
-        }
 
-        // Update status kabid
-        $surat->update([
-            'status_kabid' => 'Selesai'
-        ]);
-
-        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
-    }
-    public function selesai2($id)
-    {
-        // Cari surat
-        $surat = SuratMasuk::findOrFail($id);
-
-        // Cek kalau sudah selesai, jangan update lagi
-        if ($surat->status_kabid == 'Selesai') {
-            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
-        }
-
-        // Update status kabid
-        $surat->update([
-            'status_kabid' => 'Selesai'
-        ]);
-
-        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
-    }
-    public function selesai3($id)
-    {
-        // Cari surat
-        $surat = SuratMasuk::findOrFail($id);
-
-        // Cek kalau sudah selesai, jangan update lagi
-        if ($surat->status_kabid == 'Selesai') {
-            return redirect()->back()->with('info', 'Surat ini sudah selesai sebelumnya.');
-        }
-
-        // Update status kabid
-        $surat->update([
-            'status_kabid' => 'Selesai'
-        ]);
-
-        return redirect()->back()->with('success', 'Surat telah ditandai sebagai selesai.');
-    }
 
 
     public function index()
