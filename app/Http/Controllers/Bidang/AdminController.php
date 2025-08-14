@@ -199,7 +199,7 @@ class AdminController extends Controller
         ]);
 
         // Kirim notifikasi ke Kepala Badan
-        $pesan = "📩 *Surat Masuk Baru*\n"
+        $pesan = "Admin : 📩 *Surat Masuk Baru*\n"
             . "Instansi: *{$surat->asal_surat}*\n"
             . "No. Surat: *{$surat->no_surat}*\n"
             . "Perihal: *{$surat->perihal}*\n"
@@ -208,11 +208,22 @@ class AdminController extends Controller
             . "https://simakbkad-production-5898.up.railway.app/";
 
         $this->kirimWaKaban($pesan);
+        // dd($response);
 
         return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
     }
 
+    public function kirimWaKaban($pesan)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => '6FgWhQZsCZBPm8fZAUSW',
+        ])->asForm()->post('https://api.fonnte.com/send', [
+            'target' => '6281275232909', // no kaban
+            'message' => $pesan,
+        ]);
 
+        return $response->json();
+    }
 
 
 
@@ -230,16 +241,5 @@ class AdminController extends Controller
     {
         $users = User::all();
         return view('admin.users', compact('users'));
-    }
-    public function kirimWaKaban($pesan)
-    {
-        $response = Http::withHeaders([
-            'Authorization' => '6FgWhQZsCZBPm8fZAUSW',
-        ])->asForm()->post('https://api.fonnte.com/send', [
-            'target' => '6281275232909',
-            'message' => $pesan,
-        ]);
-
-        return $response->json();
     }
 }

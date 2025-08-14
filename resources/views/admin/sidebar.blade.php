@@ -36,7 +36,7 @@
                     <li class="nav-item"><a class="nav-link"
                             href="{{ route('admin.suratmasuk.selesai') }}">Arsip Surat</a></li>
                     <li class="nav-item"><a class="nav-link"
-                            href="">Ekspedisi Surat</a></li>
+                            href="{{ route('admin.ekspedisi.index') }}">Ekspedisi Surat</a></li>
                 </ul>
             </div>
         </li>

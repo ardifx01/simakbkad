@@ -1,4 +1,4 @@
-@extends('admin.template')
+@extends('admin.template1')
 
 @section('content')
     <div class="row justify-content-center">

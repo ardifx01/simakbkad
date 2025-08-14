@@ -20,6 +20,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('assets/images/logoDairi.png') }}" />
+    <style>
+        .modal-dialog-top-right {
+            position: fixed;
+            top: 70px;
+            /* jarak dari navbar */
+            right: 20px;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,7 +43,7 @@
             {{-- BAGIAN SIDEBAR --}}
             @include('layout.sidebar')
             {{-- @include('layout.template') --}}
-            
+
             @yield('content')
 
         </div>

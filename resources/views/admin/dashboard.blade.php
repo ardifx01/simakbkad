@@ -22,93 +22,70 @@
                           <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                               <h3 class="font-weight-bold">Halo {{ $user->nama }}..</h3>
                               <h6 class="font-weight-normal mb-0">{{ $greeting }}
-                                 <span class="text-primary">Tetap Semangat!</span>
+                                  <span class="text-primary">Tetap Semangat!</span>
                               </h6>
-                          </div>
-
-                          <div class="col-12 col-xl-4">
-                              <div class="justify-content-end d-flex">
-                                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
-                                          id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
-                                          aria-expanded="true">
-                                          <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
-                                      </button>
-                                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                          <a class="dropdown-item" href="#">January - March</a>
-                                          <a class="dropdown-item" href="#">March - June</a>
-                                          <a class="dropdown-item" href="#">June - August</a>
-                                          <a class="dropdown-item" href="#">August - November</a>
-                                      </div>
-                                  </div>
-                              </div>
                           </div>
                       </div>
                   </div>
               </div>
               <div class="row">
-                  <div class="col-md-6 grid-margin stretch-card">
-                      <div class="card tale-bg">
-                          <div class="card-people mt-auto">
-                              <img src="{{ asset('assets/images/dashboard/people.svg') }}" alt="people">
-                              <div class="weather-info">
-                                  <div class="d-flex">
-                                      <div>
-                                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup>
-                                          </h2>
-                                      </div>
-                                      <div class="ml-2">
-                                          <h4 class="location font-weight-normal">Bangalore</h4>
-                                          <h6 class="font-weight-normal">India</h6>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 grid-margin transparent">
+                  <div class="col-md-12 grid-margin transparent">
                       <div class="row">
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-tale">
-                                  <div class="card-body">
-                                      <p class="mb-4">Today’s Bookings</p>
-                                      <p class="fs-30 mb-2">4006</p>
-                                      <p>10.00% (30 days)</p>
+                          <div class="col-md-4 mb-4">
+                              <div class="card text-white"
+                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                  <div class="card-body d-flex align-items-center justify-content-between">
+                                      <div class="d-flex align-items-center">
+                                          <img src="{{ asset('assets/images/logo_surat.png') }}" alt="Icon Surat"
+                                              style="width: 48px; height: 48px; margin-right: 15px;" />
+                                          <div>
+                                              <p class="mb-1" style="font-weight: 600; font-size: 18px;">Surat Masuk</p>
+                                          </div>
+                                      </div>
+                                      <h2 class="mb-0" style="font-weight: 700;">{{ $totalSuratMasuk ?? 0 }}</h2>
                                   </div>
                               </div>
                           </div>
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-dark-blue">
-                                  <div class="card-body">
-                                      <p class="mb-4">Total Bookings</p>
-                                      <p class="fs-30 mb-2">61344</p>
-                                      <p>22.00% (30 days)</p>
+                          <div class="col-md-4 mb-4">
+                              <div class="card text-white"
+                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                  <div class="card-body d-flex align-items-center justify-content-between">
+                                      <div class="d-flex align-items-center">
+                                          <img src="{{ asset('assets/images/logo_arsip.png') }}" alt="Icon Arsip"
+                                              style="width: 48px; height: 48px; margin-right: 15px;" />
+                                          <div>
+                                              <p class="mb-1" style="font-weight: 600; font-size: 18px;">Arsip Surat</p>
+                                          </div>
+                                      </div>
+                                      <h2 class="mb-0" style="font-weight: 700;">{{ $totalSuratMasuk ?? 0 }}</h2>
                                   </div>
                               </div>
                           </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                              <div class="card card-light-blue">
-                                  <div class="card-body">
-                                      <p class="mb-4">Number of Meetings</p>
-                                      <p class="fs-30 mb-2">34040</p>
-                                      <p>2.00% (30 days)</p>
+                          <div class="col-md-4 mb-4">
+                              <div class="card text-white"
+                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                  <div class="card-body d-flex align-items-center justify-content-between">
+                                      <div class="d-flex align-items-center">
+                                          <img src="{{ asset('assets/images/logo_user.png') }}" alt="Icon Barang"
+                                              style="width: 48px; height: 48px; margin-right: 15px;" />
+                                          <div>
+                                              <p class="mb-1" style="font-weight: 600; font-size: 18px;">User</p>
+                                          </div>
+                                      </div>
+                                      <h2 class="mb-0" style="font-weight: 700;">{{ $totalPengguna ?? 0 }}</h2>
                                   </div>
                               </div>
                           </div>
-                          <div class="col-md-6 stretch-card transparent">
-                              <div class="card card-light-danger">
-                                  <div class="card-body">
-                                      <p class="mb-4">Number of Clients</p>
-                                      <p class="fs-30 mb-2">47033</p>
-                                      <p>0.22% (30 days)</p>
-                                  </div>
+                          <div class="col-md-5 mb-4">
+                              <div class="card" style="border-radius: 8px; padding: 20px;">
+                                  <h5>Surat Masuk Per Hari</h5>
+                                  <canvas id="suratMasukChart"></canvas>
                               </div>
                           </div>
+
                       </div>
                   </div>
               </div>
-             @include('layout.footer')
+              {{-- @include('layout.footer') --}}
           </div>
       @endsection

@@ -1,4 +1,4 @@
-@extends('admin.template')
+@extends('admin.template1')
 @section('content')
     <div class="col-lg-10 grid-margin stretch-card">
         <div class="card">
@@ -28,7 +28,7 @@
                                 <th>Asal</th>
                                 <th>Perihal</th>
                                 <th>Sifat</th>
-                                <th>Disposisi</th>
+                                <th>Disposisi Kaban</th>
                                 <th>Status Kabid</th> {{-- kolom baru --}}
                             </tr>
                         </thead>

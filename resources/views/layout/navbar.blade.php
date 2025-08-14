@@ -11,7 +11,7 @@
             </button>
             <ul class="navbar-nav mr-lg-2">
                 <li class="nav-item nav-search d-none d-lg-block">
-                    <div class="input-group mt-3" >
+                    <div class="input-group mt-3">
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
@@ -93,10 +93,6 @@
                         <i class="ti-user mx-0" style="font-size: 22px;" alt="profile"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item">
-                            <i class="ti-settings text-primary"></i>
-                            Settings
-                        </a>
                         <a href="#" class="dropdown-item"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="ti-power-off text-primary"></i> Logout
@@ -115,3 +111,25 @@
             </button>
         </div>
     </nav>
+    <!-- Modal Profil -->
+    {{-- <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-top-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h5 class="modal-title" id="profileModalLabel">Profil Saya</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-3">
+                    <p><strong>Nama:</strong> {{ Auth::user()->nama }}</p>
+                    <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+                    <p><strong>Role:</strong> {{ Auth::user()->role->nama_role }}</p>
+                    <hr> --}}
+    {{-- <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-primary btn-block">Edit Profil</a> --}}
+    {{-- <a href="#" class="btn btn-sm btn-primary btn-block">Edit Profil</a>
+                </div>
+            </div>
+        </div>
+    </div> --}}

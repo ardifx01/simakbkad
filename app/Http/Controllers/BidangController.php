@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ArsipSurat;
 use App\Models\Bidang;
+use App\Models\EkspedisiSuratMasuk;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,28 @@ class BidangController extends Controller
     // }
 
 
+    // public function selesai($id)
+    // {
+    //     $surat = SuratMasuk::findOrFail($id);
+
+    //     // Cek kalau sudah selesai
+    //     if ($surat->status_kabid === 'Selesai') {
+    //         return redirect()->back()->with('info', 'Opss.. Surat ini sudah selesai sebelumnya.');
+    //     }
+
+    //     // Ambil role user login
+    //     $role = Auth::user()->role->nama_role;
+
+    //     // Update status jadi selesai
+    //     $surat->status_kabid = 'Selesai';
+    //     $surat->save();
+
+    //     return redirect()->back()->with(
+    //         'success',
+    //         'Surat telah ditandai sebagai selesai oleh ' . $role
+    //     );
+    // }
+
     public function selesai($id)
     {
         $surat = SuratMasuk::findOrFail($id);
@@ -97,11 +120,25 @@ class BidangController extends Controller
         $surat->status_kabid = 'Selesai';
         $surat->save();
 
+        // Input otomatis ke tabel ekspedisi_surat_masuk
+        EkspedisiSuratMasuk::create([
+            'no' => $this->generateNoEkspedisi(),
+            'sipengirim' => $surat->asal_surat,                     // bidang pengirim = role user Kabid
+            'nomor_surat' => $surat->no_surat,        // nomor surat dari surat masuk
+            'tanggal' => $surat->tanggal_surat,       // tanggal surat
+            // 'no' bisa di-generate otomatis atau diabaikan kalau auto increment
+        ]);
+
         return redirect()->back()->with(
             'success',
-            'Surat telah ditandai sebagai selesai oleh ' . $role
+            'Surat telah ditandai sebagai selesai oleh ' . $role . ' dan tercatat di ekspedisi.'
         );
     }
+    protected function generateNoEkspedisi()
+    {
+        return 'EXP-' . date('YmdHis');
+    }
+
 
 
 

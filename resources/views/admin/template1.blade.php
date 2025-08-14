@@ -132,33 +132,6 @@
             });
         });
     </script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('suratMasukChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: @json($labels),
-            datasets: [{
-                label: 'Jumlah Surat Masuk',
-                data: @json($data),
-                backgroundColor: 'rgba(25, 81, 179, 0.7)',
-                borderColor: 'rgba(25, 81, 179, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            indexAxis: 'x',
-            responsive: true,
-            scales: { y: { beginAtZero: true, stepSize: 1 } }
-        }
-    });
-</script>
-
-
-
 </body>
 
 </html>

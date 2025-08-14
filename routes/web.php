@@ -9,10 +9,16 @@ use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\DistribusiController;
+use App\Http\Controllers\EkspedisiSuratMasukController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SekretarisController;
 use App\Http\Controllers\SekretarisDistribusiController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\UsersController;
+use App\Models\EkspedisiSuratMasuk;
+use App\Models\SuratMasuk;
+use App\Models\User;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +50,23 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // === Admin ===
 Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    // Route::get('/admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    // Route::get('/admin/dashboard', function () {
+    //     $totalSuratMasuk = SuratMasuk::count();
+    //     $totalPengguna = User::count();
+    //     // Ambil data 7 hari terakhir
+    //     $suratMasukPerHari = SuratMasuk::selectRaw('DATE(tanggal_masuk) as tanggal_masuk, COUNT(*) as total')
+    //         ->where('tanggal_masuk', '>=', Carbon::now()->subDays(6)) // 7 hari terakhir
+    //         ->groupBy('tanggal_masuk')
+    //         ->orderBy('tanggal_masuk', 'ASC')
+    //         ->get();
+
+    //     $labels = $suratMasukPerHari->pluck('tanggal_masuk'); // Tanggal
+    //     $data = $suratMasukPerHari->pluck('total');     // Total surat
+
+    //     return view('admin.dashboard', compact('totalSuratMasuk', 'totalPengguna', 'labels', 'data'));
+    // })->name('admin.dashboard');
     Route::get('/admin/suratMasuk', [AdminController::class, 'surat_masuk'])->name('admin.input_surat');
     Route::get('/admin/dataSuratMasuk', [AdminController::class, 'data_surat'])->name('admin.dataSuratMasuk');
     Route::get('/admin/dataSuratMasuk', [AdminController::class, 'dataSuratMasuk'])->name('admin.dataSuratMasuk');
@@ -58,6 +80,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::post('/admin/tambahUser', [UsersController::class, 'store'])->name('admin.user.store');
     Route::patch('/admin/user/{id}/toggle', [UsersController::class, 'toggleStatus'])->name('admin.user.toggleStatus');
     Route::get('/admin/suratmasuk/selesai', [AdminController::class, 'arsip_surat'])->name('admin.suratmasuk.selesai');
+    Route::get('/admin/suratmasuk/ekspedisi', [EkspedisiSuratMasukController::class, 'index'])->name('admin.ekspedisi.index');
 });
 
 // === Kepala Badan ===
@@ -117,6 +140,8 @@ Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/disposisi/selesai/{id}', [BidangController::class, 'selesai'])->name('kabid.disposisi.selesai');
 });
+
+
 
 
 /*
