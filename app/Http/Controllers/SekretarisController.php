@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bidang;
+use App\Models\Disposisi;
 use App\Models\DistribusiSurat;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class SekretarisController extends Controller
@@ -63,23 +65,62 @@ class SekretarisController extends Controller
     // }
 
 
+    // public function storeDistribusi(Request $request)
+    // {
+    //     $request->validate([
+    //         'surat_id' => 'required|exists:surat_masuks,id',
+    //         'kepada_bidang' => 'required|array',
+    //         'kepada_bidang.*' => 'string|max:255',
+    //         'catatan' => 'nullable|string',
+    //     ]);
+
+    //     DistribusiSurat::create([
+    //         'surat_id' => $request->surat_id,
+    //         'bidang_tujuan' => implode(', ', $request->kepada_bidang),
+    //         'catatan_sekretaris' => $request->catatan,
+    //     ]);
+
+    //     // Ambil data surat untuk isi pesan
+    //     $surat = SuratMasuk::find($request->surat_id);
+
+    //     $pesan = "📩 *Surat Masuk Didistribusikan*\n"
+    //         . "Dari Sekretaris ke Kabid\n\n"
+    //         . "No. Surat: *{$surat->no_surat}*\n"
+    //         . "Perihal: *{$surat->perihal}*\n"
+    //         . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
+    //         . "Catatan Sekretaris: *" . ($request->catatan ?? '-') . "*\n\n"
+    //         . "Silakan login untuk melihat detail:\n"
+    //         . "https://simakbkad-production-5898.up.railway.app/";
+
+    //     // Kirim WA ke Kabid
+    //     $this->kirimWaKabid($pesan);
+    //     // dd($respones);
+    //     return redirect()->route('sekretaris.dataSuratMasuk')
+    //         ->with('success', 'Distribusi surat berhasil disimpan dan notifikasi WA terkirim.');
+    // }
     public function storeDistribusi(Request $request)
     {
         $request->validate([
             'surat_id' => 'required|exists:surat_masuks,id',
-            'kepada_bidang' => 'required|array',
-            'kepada_bidang.*' => 'string|max:255',
             'catatan' => 'nullable|string',
         ]);
 
+        // Ambil disposisi dari Kepala
+        $disposisi = Disposisi::where('surat_id', $request->surat_id)->first();
+
+        if (!$disposisi) {
+            return back()->with('error', 'Disposisi Kepala belum ada.');
+        }
+
+        // Simpan ke tabel distribusi_surats
         DistribusiSurat::create([
             'surat_id' => $request->surat_id,
-            'bidang_tujuan' => implode(', ', $request->kepada_bidang),
+            'bidang_tujuan' => $disposisi->kepada_bidang, // langsung ambil dari disposisi kepala
             'catatan_sekretaris' => $request->catatan,
         ]);
 
         // Ambil data surat untuk isi pesan
-        $surat = SuratMasuk::find($request->surat_id);
+        $surat = SuratMasuk::findOrFail($request->surat_id);
 
         $pesan = "📩 *Surat Masuk Didistribusikan*\n"
             . "Dari Sekretaris ke Kabid\n\n"
@@ -88,14 +129,17 @@ class SekretarisController extends Controller
             . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
             . "Catatan Sekretaris: *" . ($request->catatan ?? '-') . "*\n\n"
             . "Silakan login untuk melihat detail:\n"
-            . "https://simakbkad-production-5898.up.railway.app/";
+            . url('/');
 
         // Kirim WA ke Kabid
         $this->kirimWaKabid($pesan);
-        // dd($respones);
+
         return redirect()->route('sekretaris.dataSuratMasuk')
             ->with('success', 'Distribusi surat berhasil disimpan dan notifikasi WA terkirim.');
     }
+
+
+
 
     public function kirimWaKabid($pesan)
     {

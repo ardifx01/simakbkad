@@ -23,7 +23,8 @@
                                 <th>Asal</th>
                                 <th>Perihal</th>
                                 <th>Sifat</th>
-                                <th>Status</th>
+                                <th>Status Disposisi</th>
+                                <th>Status Kabid</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,13 @@
                                             <label class="badge badge-info">Didisposisikan</label>
                                         @else
                                             <label class="badge badge-success">Selesai</label>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($surat->status_kabid == 'Selesai')
+                                            <label class="badge badge-success">Selesai</label>
+                                        @else
+                                            <label class="badge badge-secondary">Proses</label>
                                         @endif
                                     </td>
                                 </tr>

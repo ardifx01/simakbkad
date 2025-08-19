@@ -35,8 +35,8 @@
                         {{ $disposisi->isi_disposisi }}
                     </div>
                     <p><strong>Isi Catatan dari Sekretaris:</strong></p>
-                    <div class="border p-2 bg-light rounded">
-                        {{ $distribusi_surat->catatan_sekretaris ?? '-' }}
+                     <div class="border p-2 bg-light rounded">
+                        {{ $distribusi->catatan_sekretaris ?? '-' }}
                     </div>
                     {{-- Tombol Selesai --}}
                     <div class="mt-3">

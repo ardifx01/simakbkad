@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->timestamps();
 
-            $table->foreign('surat_id')->references('id')->on('surat_masuk')->onDelete('cascade');
+            $table->foreign('surat_id')->references('id')->on('surat_masuks')->onDelete('cascade');
         });
     }
 

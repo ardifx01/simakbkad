@@ -19,43 +19,6 @@ class DisposisiController extends Controller
         return view('admin.disposisi', compact('disposisis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'surat_id' => 'required|exists:surat_masuks,id',
-    //         'kepada_bidang' => 'required|array',
-    //         'kepada_bidang.*' => 'string',
-    //         'isi_disposisi' => 'required|string',
-    //     ]);
-
-    //     Disposisi::create([
-    //         'surat_id' => $request->surat_id,
-    //         'tanggal' => now(),
-    //         'kepada_bidang' => implode(',', $request->kepada_bidang),
-    //         'isi_disposisi' => $request->isi_disposisi,
-    //         'tindakan' => implode(', ', $request->tindakan), // tambahkan ini di DB juga
-    //         'dari_id' => Auth::id(),
-    //     ]);
-
-    //     // Tambahkan setelah Disposisi::create(...);
-    //     $surat = SuratMasuk::find($request->surat_id);
-    //     $surat->status_disposisi = 'Didisposisikan';
-    //     $surat->save();
-
-    //     dd($surat);
-    //     return redirect()->route('kepala.dataSuratMasuk')->with('success', 'Disposisi berhasil dikirim!');
-    // }
     public function store(Request $request)
     {
         $request->validate([
@@ -69,10 +32,11 @@ class DisposisiController extends Controller
         Disposisi::create([
             'surat_id' => $request->surat_id,
             'tanggal' => now(),
-            'kepada_bidang' => implode(',', $request->kepada_bidang),
+            'kepada_bidang' => implode(',', $request->kepada_bidang), // Kepala tentukan tujuan
             'isi_disposisi' => $request->isi_disposisi,
             'tindakan' => implode(', ', $request->tindakan ?? []),
             'dari_id' => Auth::id(),
+            'status' => 'Menunggu Sekretaris', // <-- tambahan status
         ]);
 
         $surat = SuratMasuk::find($request->surat_id);
@@ -105,38 +69,6 @@ class DisposisiController extends Controller
         return $response->json();
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Disposisi $disposisi)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Disposisi $disposisi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Disposisi $disposisi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Disposisi $disposisi)
-    {
-        //
-    }
     public function detail($id)
     {
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
@@ -145,8 +77,7 @@ class DisposisiController extends Controller
     }
 
 
-
-
+    // == ASSET ==
     public function disposisiAsset()
     {
         $user = Auth::user();
@@ -154,7 +85,7 @@ class DisposisiController extends Controller
         $nama_bidang = 'KABID BMD';
 
         // Ambil disposisi yang mengandung nama bidang tersebut
-        $disposisis = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%' . $nama_bidang . '%')
+        $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->latest()
             ->get();
 
@@ -162,15 +93,21 @@ class DisposisiController extends Controller
     }
     public function detailAsset($id)
     {
+        // Ambil disposisi
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
-        $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
-        $surat = SuratMasuk::findOrFail($id);
-        return view('asset.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
+
+        // Ambil surat terkait
+        $surat = SuratMasuk::findOrFail($disposisi->surat_id);
+
+        // Ambil distribusi surat berdasarkan surat_id
+        $distribusi = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+
+        return view('asset.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
 
 
 
-
+    // == AKUNTANSI ==
     public function disposisiAkuntansi()
     {
         $user = Auth::user();
@@ -179,29 +116,29 @@ class DisposisiController extends Controller
         $nama_bidang = 'KABID AKUNTANSI';
 
         // Ambil disposisi yang mengandung nama bidang tersebut
-        $disposisis = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%' . $nama_bidang . '%')
+        $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->latest()
             ->get();
 
         return view('akuntansi.disposisi.index', compact('disposisis'));
     }
-
     public function detailAkuntansi($id)
     {
+        // Ambil disposisi
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
 
-        // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
-        $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+        // Ambil surat terkait
+        $surat = SuratMasuk::findOrFail($disposisi->surat_id);
 
-        $surat = SuratMasuk::findOrFail($id);
+        // Ambil distribusi surat berdasarkan surat_id
+        $distribusi = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
 
-        return view('akuntansi.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
+        return view('akuntansi.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
 
 
 
-
-
+    // == ANGGARAN ==
     public function disposisiAnggaran()
     {
         $user = Auth::user();
@@ -210,27 +147,29 @@ class DisposisiController extends Controller
         $nama_bidang = 'KABID PENGANGGARAN';
 
         // Ambil disposisi yang mengandung nama bidang tersebut
-        $disposisis = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%' . $nama_bidang . '%')
+        $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->latest()
             ->get();
 
         return view('anggaran.disposisi.index', compact('disposisis'));
     }
-
     public function detailAnggaran($id)
     {
+        // Ambil disposisi
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
 
-        // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
-        $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+        // Ambil surat terkait
+        $surat = SuratMasuk::findOrFail($disposisi->surat_id);
 
-        $surat = SuratMasuk::findOrFail($id);
-        return view('anggaran.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
+        // Ambil distribusi surat berdasarkan surat_id
+        $distribusi = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+
+        return view('anggaran.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
 
 
 
-
+    // == PEMBENDAHARAAN ==
     public function disposisiPembendaharaan()
     {
         $user = Auth::user();
@@ -239,23 +178,24 @@ class DisposisiController extends Controller
         $nama_bidang = 'KABID PEMBENDAHARAAN';
 
         // Ambil disposisi yang mengandung nama bidang tersebut
-        $disposisis = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%' . $nama_bidang . '%')
+        $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->latest()
             ->get();
 
         return view('pembendaharaan.disposisi.index', compact('disposisis'));
     }
 
-
-
     public function detailPembendaharaan($id)
     {
+        // Ambil disposisi
         $disposisi = Disposisi::with(['surat', 'dari'])->findOrFail($id);
 
-        // Ambil distribusi surat untuk surat ini (ambil 1 data saja)
-        $distribusi_surat = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+        // Ambil surat terkait
+        $surat = SuratMasuk::findOrFail($disposisi->surat_id);
 
-        $surat = SuratMasuk::findOrFail($id);
-        return view('pembendaharaan.disposisi_detail', compact('disposisi', 'distribusi_surat', 'surat'));
+        // Ambil distribusi surat berdasarkan surat_id
+        $distribusi = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
+
+        return view('pembendaharaan.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
 }

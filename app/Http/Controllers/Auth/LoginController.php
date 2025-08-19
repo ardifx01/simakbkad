@@ -14,6 +14,10 @@ class LoginController extends Controller
         $roles = Role::all();
         return view('auth.login', compact('roles'));
     }
+    public function showlanding()
+    {
+        return view('landing');
+    }
     public function login(Request $request)
     {
         $credentials = $request->validate([

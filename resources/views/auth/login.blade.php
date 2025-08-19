@@ -26,7 +26,6 @@
                 style="background-image: url('{{ asset('assets/images/bg.jpeg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <div class="row w-100 mx-0">
                     <div class="col-lg-4 mx-auto">
-                        {{-- <div class="auth-form-light text-left py-5 px-4 px-sm-5"> --}}
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5"
                             style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); border-radius: 15px;">
                             <div class="brand-logo">
@@ -52,6 +51,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                    <a href="{{ route('landing') }}" class="btn btn-close btn-block">Cancel</a>
                                 </div>
                                 {{-- <div class="text-center mt-4 font-weight-light">
                                     Belum Punya Akun? <a href="{{ route('register') }}" class="text-primary">Buat

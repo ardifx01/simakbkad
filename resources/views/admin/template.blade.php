@@ -94,7 +94,7 @@
             $('#suratTable').DataTable({
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Cari surat...",
+                    searchPlaceholder: "Cari...",
                     lengthMenu: "Tampilkan _MENU_ entri",
                     zeroRecords: "Data tidak ditemukan",
                     info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",

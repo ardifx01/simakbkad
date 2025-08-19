@@ -29,7 +29,7 @@
                                 <th>Perihal</th>
                                 <th>Sifat</th>
                                 <th>Disposisi Kaban</th>
-                                <th>Status Kabid</th> {{-- kolom baru --}}
+                                <th>Status Kabid</th>
                             </tr>
                         </thead>
                         <tbody>

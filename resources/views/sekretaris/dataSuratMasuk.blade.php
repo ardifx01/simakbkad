@@ -23,6 +23,7 @@
                                 <th>Asal</th>
                                 <th>Perihal</th>
                                 <th>Sifat</th>
+                                <th>Status Kabid</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,13 @@
                                         {{ $surat->perihal }}
                                     </td>
                                     <td>{{ $surat->sifat ?? '-' }}</td>
+                                    <td>
+                                        @if ($surat->status_kabid == 'Selesai')
+                                            <label class="badge badge-success">Selesai</label>
+                                        @else
+                                            <label class="badge badge-secondary">Proses</label>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
 

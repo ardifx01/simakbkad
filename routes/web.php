@@ -36,6 +36,7 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/landing', [LoginController::class, 'showLanding'])->name('landing');
 Route::post('/login', [LoginController::class, 'login'])->name('login.proses');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

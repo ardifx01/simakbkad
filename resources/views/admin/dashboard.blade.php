@@ -20,9 +20,10 @@
                           @endphp
 
                           <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                              <h3 class="font-weight-bold">Halo {{ $user->nama }}..</h3>
-                              <h6 class="font-weight-normal mb-0">{{ $greeting }}
-                                  <span class="text-primary">Tetap Semangat!</span>
+                              <h3 class="font-weight-bold">Dashboard Admin</h3>
+                              {{-- <h3 class="font-weight-bold">Halo {{ $user->nama }}..</h3> --}}
+                              <h6 class="font-weight-normal mb-0">{{ $greeting }} 
+                                  <span class="text-primary mb-5">{{ $user->nama }}</span>
                               </h6>
                           </div>
                       </div>

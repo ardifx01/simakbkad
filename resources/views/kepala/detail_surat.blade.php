@@ -87,6 +87,10 @@
                                 @php
                                     $bidangs = [
                                         'Sekretaris',
+                                        'KABID AKUNTANSI',
+                                        'KABID PENGANGGARAN',
+                                        'KABID BMD',
+                                        'KABID PEMBENDAHARAAN'
                                     ];
                                 @endphp
                                 <div class="ml-2">

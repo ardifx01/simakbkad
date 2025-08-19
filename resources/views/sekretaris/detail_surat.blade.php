@@ -54,27 +54,6 @@
                             <label for="catatan">Catatan Sekretaris</label>
                             <textarea name="catatan" id="catatan" class="form-control" rows="3" required></textarea>
                         </div>
-
-                        {{-- Pilihan Bidang --}}
-                        <div class="form-group">
-                            <label>Pilih Bidang Tujuan:</label><br>
-                            @php
-                                $bidangs = [
-                                    'KABID AKUNTANSI',
-                                    'KABID PENGANGGARAN',
-                                    'KABID BMD',
-                                    'KABID PEMBENDAHARAAN',
-                                ];
-                            @endphp
-                            @foreach ($bidangs as $bidang)
-                                <div class="form-check">
-                                    <input type="checkbox" name="kepada_bidang[]" value="{{ $bidang }}"
-                                        class="form-check-input" id="{{ $bidang }}">
-                                    <label class="form-check-label" for="{{ $bidang }}">{{ $bidang }}</label>
-                                </div>
-                            @endforeach
-                        </div>
-
                         <button type="submit" class="btn btn-info">Kirim Distribusi</button>
                     </form>
                 </div>
@@ -93,3 +72,5 @@
         </div>
     </div>
 @endsection
+
+
