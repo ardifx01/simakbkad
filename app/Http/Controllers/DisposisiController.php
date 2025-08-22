@@ -36,7 +36,7 @@ class DisposisiController extends Controller
             'isi_disposisi' => $request->isi_disposisi,
             'tindakan' => implode(', ', $request->tindakan ?? []),
             'dari_id' => Auth::id(),
-            'status' => 'Menunggu Sekretaris', // <-- tambahan status
+            // 'status' => 'Menunggu Sekretaris', // <-- tambahan status
         ]);
 
         $surat = SuratMasuk::find($request->surat_id);
@@ -86,9 +86,12 @@ class DisposisiController extends Controller
 
         // Ambil disposisi yang mengandung nama bidang tersebut
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
+            ->whereHas('surat', function ($q) {
+                $q->where('status_kabid', 'Belum Selesai')
+                ->where('status_sekretaris', 'didistribusikan');
+            })
             ->latest()
             ->get();
-
         return view('asset.disposisi.index', compact('disposisis'));
     }
     public function detailAsset($id)
@@ -104,6 +107,16 @@ class DisposisiController extends Controller
 
         return view('asset.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
+    public function arsip_surat_asset()
+    {
+        $surats = SuratMasuk::where('status_kabid', 'selesai')
+            ->whereHas('disposisi', function ($q) {
+                $q->where('kepada_bidang', 'LIKE', '%KABID BMD%');
+            })
+            ->get();
+
+        return view('asset.arsip', compact('surats'));
+    }
 
 
 
@@ -117,6 +130,10 @@ class DisposisiController extends Controller
 
         // Ambil disposisi yang mengandung nama bidang tersebut
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
+            ->whereHas('surat', function ($q) {
+                $q->where('status_kabid', 'Belum Selesai')
+                ->where('status_sekretaris', 'didistribusikan');
+            })
             ->latest()
             ->get();
 
@@ -135,6 +152,16 @@ class DisposisiController extends Controller
 
         return view('akuntansi.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
+    public function arsip_surat_akuntansi()
+    {
+        $surats = SuratMasuk::where('status_kabid', 'selesai')
+            ->whereHas('disposisi', function ($q) {
+                $q->where('kepada_bidang', 'LIKE', '%KABID AKUNTANSI%');
+            })
+            ->get();
+
+        return view('akuntansi.arsip', compact('surats'));
+    }
 
 
 
@@ -148,6 +175,10 @@ class DisposisiController extends Controller
 
         // Ambil disposisi yang mengandung nama bidang tersebut
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
+            ->whereHas('surat', function ($q) {
+                $q->where('status_kabid', 'Belum Selesai')
+                ->where('status_sekretaris', 'didistribusikan');
+            })
             ->latest()
             ->get();
 
@@ -166,6 +197,16 @@ class DisposisiController extends Controller
 
         return view('anggaran.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
     }
+    public function arsip_surat_anggaran()
+    {
+        $surats = SuratMasuk::where('status_kabid', 'selesai')
+            ->whereHas('disposisi', function ($q) {
+                $q->where('kepada_bidang', 'LIKE', '%KABID ANGGARAN%');
+            })
+            ->get();
+
+        return view('anggaran.arsip', compact('surats'));
+    }
 
 
 
@@ -179,12 +220,15 @@ class DisposisiController extends Controller
 
         // Ambil disposisi yang mengandung nama bidang tersebut
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
+            ->whereHas('surat', function ($q) {
+                $q->where('status_kabid', 'Belum Selesai')
+                ->where('status_sekretaris', 'didistribusikan');
+            })
             ->latest()
             ->get();
 
         return view('pembendaharaan.disposisi.index', compact('disposisis'));
     }
-
     public function detailPembendaharaan($id)
     {
         // Ambil disposisi
@@ -197,5 +241,15 @@ class DisposisiController extends Controller
         $distribusi = DistribusiSurat::where('surat_id', $disposisi->surat_id)->first();
 
         return view('pembendaharaan.disposisi_detail', compact('disposisi', 'distribusi', 'surat'));
+    }
+    public function arsip_surat_bendahara()
+    {
+        $surats = SuratMasuk::where('status_kabid', 'selesai')
+            ->whereHas('disposisi', function ($q) {
+                $q->where('kepada_bidang', 'LIKE', '%KABID PEMBENDAHARAAN%');
+            })
+            ->get();
+
+        return view('pembendaharaan.arsip', compact('surats'));
     }
 }

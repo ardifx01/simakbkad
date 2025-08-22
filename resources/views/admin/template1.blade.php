@@ -34,6 +34,17 @@
 </head>
 
 <body>
+
+    <!-- Overlay animasi logout -->
+    <div id="logout-loading"
+        style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: rgba(0,0,0,0.5); z-index:9999; 
+            justify-content:center; align-items:center;">
+        <lottie-player src="{{ asset('lottie/loading.json') }}" background="transparent" speed="0.5"
+            style="width: 400px; height: 400px;" loop autoplay>
+        </lottie-player>
+    </div>
+
     <div class="container-scroller">
 
         {{-- BAGIAN NAVBAR --}}
@@ -131,6 +142,21 @@
                 });
             });
         });
+    </script>
+    @stack('scripts')
+    <!-- Panggil Lottie player script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Script -->
+    <script>
+        function showLogoutLoading() {
+            let overlay = document.getElementById('logout-loading');
+            overlay.style.display = 'flex'; // tampilkan overlay
+
+            setTimeout(function() {
+                document.getElementById('logout-form').submit();
+            }, 1500); // delay biar animasi terlihat
+        }
     </script>
 </body>
 

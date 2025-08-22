@@ -18,7 +18,7 @@ class UsersController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:30',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
             'role_id' => 'required|exists:roles,id',
             'password' => 'required|min:6',
         ], [
@@ -27,6 +27,7 @@ class UsersController extends Controller
             'nama.max' => 'Jumlah karakter maksimal 30 digit!',
             'email.required' => 'Email wajib di isi!',
             'email.email' => 'Format email tidak valid!',
+            'email.unique' => 'Email ini sudah terdaftar, gunakan email lain!',
             'role_id.required' => 'Silahkan pilih bidangnya!',
             'password.required' => 'Password wajib disi!',
             'password.min' => 'Password minimal 6 digit!'
@@ -46,7 +47,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->back()->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->back()->with('success', 'Data pengguna berhasil dihapus.');
     }
     public function toggleStatus($id)
     {

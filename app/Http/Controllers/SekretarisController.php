@@ -16,7 +16,8 @@ class SekretarisController extends Controller
     {
         // Ambil surat yang sudah didisposisikan ke Sekretaris
         $surats = SuratMasuk::whereHas('disposisi', function ($query) {
-            $query->where('kepada_bidang', 'LIKE', '%Sekretaris%');
+            $query->where('kepada_bidang', 'LIKE', '%Sekretaris%')
+            ->where('status_sekretaris', 'Belum Didistribusikan');
         })
             ->latest()
             ->get();
@@ -43,6 +44,12 @@ class SekretarisController extends Controller
         $surat = SuratMasuk::findOrFail($id);
         $disposisi = $surat->disposisi; // Relasi dari model SuratMasuk
         return view('sekretaris.detailDisposisi', compact('surat', 'disposisi'));
+    }
+
+    public function arsip_surat()
+    {
+        $surats = SuratMasuk::where('status_sekretaris', 'Didistribusikan')->get();
+        return view('sekretaris.arsip', compact('surats'));
     }
 
     // public function storeDistribusi(Request $request)
@@ -122,6 +129,11 @@ class SekretarisController extends Controller
         // Ambil data surat untuk isi pesan
         $surat = SuratMasuk::findOrFail($request->surat_id);
 
+        // Update status sekretaris → misalnya "didistribusikan"
+        $surat->update([
+            'status_sekretaris' => 'didistribusikan',
+        ]);
+
         $pesan = "📩 *Surat Masuk Didistribusikan*\n"
             . "Dari Sekretaris ke Kabid\n\n"
             . "No. Surat: *{$surat->no_surat}*\n"
@@ -135,7 +147,7 @@ class SekretarisController extends Controller
         $this->kirimWaKabid($pesan);
 
         return redirect()->route('sekretaris.dataSuratMasuk')
-            ->with('success', 'Distribusi surat berhasil disimpan dan notifikasi WA terkirim.');
+            ->with('success', 'Surat berhasil didistribusikan');
     }
 
 

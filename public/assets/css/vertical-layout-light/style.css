@@ -30683,6 +30683,10 @@ table.dataTable tbody td.select-checkbox:after {
   padding-top: 0.5rem;
 }
 
+ html {
+        scroll-behavior: smooth;
+    }
+
 .datepicker>div {
   display: initial;
   padding: 0.375rem 0.75rem;
@@ -33055,6 +33059,7 @@ div.tagsinput span.tag a {
     right: 0;
   }
 }
+
 
 /* Navbar */
 .navbar {

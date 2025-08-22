@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('no')->nullable();
             $table->string('sipengirim');
+            $table->string('sipenerima');
             $table->string('nomor_surat');
             $table->date('tanggal');
             $table->timestamps();

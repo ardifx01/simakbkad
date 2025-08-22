@@ -14,6 +14,7 @@ class EkspedisiSuratMasuk extends Model
     protected $fillable = [
         'no',
         'sipengirim',
+        'sipenerima',
         'nomor_surat',
         'tanggal',
     ];

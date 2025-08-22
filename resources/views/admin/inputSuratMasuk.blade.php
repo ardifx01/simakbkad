@@ -7,8 +7,8 @@
                 <p class="card-description">Lengkapi informasi pada surat masuk</p>
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+                        <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -16,7 +16,10 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('admin.suratmasuk.store') }}" enctype="multipart/form-data">
+
+
+
+                <form id="form-surat" method="POST" action="{{ route('admin.suratmasuk.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -119,3 +122,14 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#errorAlert").alert('close');
+            }, 10000);
+        });
+    </script>
+@endpush
+

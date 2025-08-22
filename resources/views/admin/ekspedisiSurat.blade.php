@@ -17,9 +17,10 @@
                             <tr>
                                 <th>No</th>
                                 <th>No Ekspedisi</th>
-                                <th>Pengirim</th>
                                 <th>Nomor Surat</th>
-                                <th>Tanggal Ekspedisi</th>
+                                <th>Tanggal</th>
+                                <th>Pengirim</th>
+                                <th>Penerima Surat</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,14 +28,15 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $ekspedisi->no ?? '-' }}</td>
-                                    <td>{{ $ekspedisi->sipengirim }}</td>
                                     <td>{{ $ekspedisi->nomor_surat }}</td>
                                     <td>{{ \Carbon\Carbon::parse($ekspedisi->tanggal)->format('d M Y') }}</td>
+                                    <td>{{ $ekspedisi->sipengirim }}</td>
+                                    <td>{{ $ekspedisi->sipenerima }}</td>
                                 </tr>
                             @empty
-                                <tr>
+                                {{-- <tr>
                                     <td colspan="5" class="text-center">Data ekspedisi kosong.</td>
-                                </tr>
+                                </tr> --}}
                             @endforelse
                         </tbody>
                     </table>

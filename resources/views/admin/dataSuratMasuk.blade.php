@@ -9,9 +9,12 @@
                         <p class="card-description">List seluruh surat yang masuk</p>
                     </div>
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('admin.input_surat') }}" class="btn btn-primary btn-sm">
+                        <a href="{{ route('admin.input_surat') }}" class="btn btn-primary btn-sm mr-3">
                             <i class="ti-plus"></i> Tambah Surat
                         </a>
+                        {{-- <a href="{{ route('admin.input_surat') }}" class="btn btn-primary btn-sm">
+                            <i class="ti-plus"></i> Tambah Surat
+                        </a> --}}
                     </div>
                 </div>
 
@@ -19,17 +22,17 @@
                     <table id="suratTable" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Jenis</th>
-                                <th>No Surat</th>
-                                <th>Tgl Surat</th>
-                                <th>Tgl Masuk</th>
+                                {{-- <th>No</th> --}}
                                 <th>No Agenda</th>
-                                <th>Asal</th>
+                                <th>No Surat</th>
+                                <th>Tgl Masuk</th>
                                 <th>Perihal</th>
+                                <th>Asal</th>
                                 <th>Sifat</th>
+                                <th>Jenis</th>
                                 <th>Disposisi Kaban</th>
                                 <th>Status Kabid</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,17 +40,16 @@
                                 <tr class="clickable-row" data-href="{{ route('admin.suratmasuk.detail', $surat->id) }}"
                                     style="cursor: pointer;" title="Klik untuk melihat ringkasannya!">
 
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $surat->jenis_surat }}</td>
-                                    <td>{{ $surat->no_surat }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d M Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d M Y') }}</td>
+                                    {{-- <td>{{ $index + 1 }}</td> --}}
                                     <td>{{ $surat->no_agenda ?? '-' }}</td>
-                                    <td>{{ $surat->asal_surat }}</td>
+                                    <td>{{ $surat->no_surat }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d M Y') }}</td>
                                     <td style="white-space: normal; word-wrap: break-word; max-width: 200px;">
                                         {{ $surat->perihal }}
                                     </td>
+                                    <td>{{ $surat->asal_surat }}</td>
                                     <td>{{ $surat->sifat ?? '-' }}</td>
+                                    <td>{{ $surat->jenis_surat }}</td>
                                     <td>
                                         @if ($surat->status_disposisi == 'Belum')
                                             <label class="badge badge-warning">Belum</label>
@@ -63,6 +65,19 @@
                                         @else
                                             <label class="badge badge-secondary">Proses</label>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.suratmasuk.destroy', $surat->id) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                onclick="event.stopPropagation(); return confirm('Yakin ingin menghapus surat ini?')"
+                                                class="btn btn-link text-danger"
+                                                style="font-size: 20px; padding:0; border:none;">
+                                                <i class="ti-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('file_surat');
             $table->foreignId('created_by')->constrained('users');
             $table->enum('status_disposisi', ['Belum', 'Didisposisikan', 'Selesai'])->default('Belum');
+            $table->timestamp('tanggal_selesai')->nullable();
             $table->timestamps();
         });
     }

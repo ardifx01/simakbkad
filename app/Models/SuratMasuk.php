@@ -25,6 +25,8 @@ class SuratMasuk extends Model
         'created_by',
         'status_disposisi',
         'status_kabid',
+        'tanggal_selesai',
+        'status_sekretaris',
     ];
 
 
@@ -38,7 +40,8 @@ class SuratMasuk extends Model
     // Relasi ke disposisi (satu surat hanya punya satu disposisi)
     public function disposisi()
     {
-        return $this->hasOne(Disposisi::class, 'surat_id');
+        // return $this->hasOne(Disposisi::class, 'surat_id');
+        return $this->hasMany(Disposisi::class, 'surat_id');
     }
     // Relasi ke Distribusi
     public function distribusi()

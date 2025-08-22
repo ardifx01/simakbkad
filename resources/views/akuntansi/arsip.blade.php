@@ -1,4 +1,4 @@
-@extends('admin.template1')
+@extends('akuntansi.template')
 
 @section('content')
     <div class="col-lg-10 grid-margin stretch-card">

@@ -13,6 +13,7 @@
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select.dataTables.min.css') }}">
     <!-- End plugin css for this page -->
@@ -96,9 +97,9 @@
                     search: "_INPUT_",
                     searchPlaceholder: "Cari...",
                     lengthMenu: "Tampilkan _MENU_ entri",
-                    zeroRecords: "Data tidak ditemukan",
+                    zeroRecords: "Data surat tidak ditemukan",
                     info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                    infoEmpty: "Data kosong",
+                    infoEmpty: "Tidak ada data surat!",
                     paginate: { 
                         previous: "Sebelumnya",
                         next: "Berikutnya"

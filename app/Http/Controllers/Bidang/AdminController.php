@@ -88,8 +88,8 @@ class AdminController extends Controller
 
     public function arsip_surat()
     {
-        $arsips = ArsipSurat::with('surat')->get();
-        return view('admin.arsip', compact('arsips'));
+        $surats = SuratMasuk::latest()->get();
+        return view('admin.arsip', compact('surats'));
     }
 
     // public function store(Request $request)
@@ -171,7 +171,8 @@ class AdminController extends Controller
             'asal_surat'     => 'required|string|max:255',
             'perihal'        => 'required|string|max:255',
             'jenis_surat'    => 'required|string',
-            'file_surat'     => 'required|file|mimes:pdf|max:5120', // hanya PDF
+            // 'file_surat'     => 'required|file|mimes:pdf|max:5120', // hanya PDF
+            'file_surat' => 'required|file|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*|max:5120',
             'tanggal_surat'  => 'required|date',
             'tanggal_masuk'  => 'required|date',
             'no_agenda'      => 'nullable|string|max:255',
@@ -241,5 +242,10 @@ class AdminController extends Controller
     {
         $users = User::all();
         return view('admin.users', compact('users'));
+    }
+    public function destroy(string $id) {
+        $cari = SuratMasuk::findOrFail($id);
+        $cari->delete();
+        return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil dihapus.');
     }
 }

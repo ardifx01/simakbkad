@@ -17,20 +17,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ route('akuntansi.disposisi.index') }}">Disposisi Surat
                             Masuk</a></li>
-                </ul>
-            </div>
-        </li>
-       
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                <i class="ti-receipt menu-icon"></i>
-                <span class="menu-title">Manajemen</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link"
-                            href="">Arsip</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('akuntansi.suratmasuk.selesai') }}">Arsip Surat</a></li>
                 </ul>
             </div>
         </li>

@@ -13,7 +13,10 @@ class KepalaController extends Controller
 {
     public function dataSuratMasuk()
     {
-        $surats = SuratMasuk::latest()->get();
+        // $surats = SuratMasuk::latest()->get();
+        $surats = SuratMasuk::where('status_disposisi', 'Belum')
+        ->where('status_kabid', 'Belum Selesai')
+        ->get();
         return view('kepala.dataSuratMasuk', compact('surats'));
     }
     public function show($id)
@@ -21,11 +24,16 @@ class KepalaController extends Controller
         $surat = SuratMasuk::findOrFail($id);
         return view('kepala.detail_surat', compact('surat'));
     }
+    public function arsip_surat()
+    {
+        $surats = SuratMasuk::where('status_disposisi', 'Didisposisikan')->get();
+        return view('kepala.arsip', compact('surats'));
+    }
 
 
 
 
-    
+
     // public function store(Request $request)
     // {
     //     $request->validate([

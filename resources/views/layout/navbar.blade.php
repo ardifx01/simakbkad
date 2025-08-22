@@ -13,13 +13,17 @@
                 <li class="nav-item nav-search d-none d-lg-block">
                     <div class="input-group mt-3">
                         @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Tutup">
+                            <div class="alert alert-success alert-dismissible fade show d-flex align-items-center"
+                                role="alert">
+                                <img src="{{ asset('assets/images/check.webp') }}" alt="cek" width="20" height="20"
+                                    class="me-2 mr-2">  
+                                 <span> {{ session('success') }}</span>
+                                <button type="button" class="close ms-auto" data-dismiss="alert" aria-label="Tutup">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                         @endif
+
                         @if (session('info'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 {{ session('info') }}

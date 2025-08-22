@@ -24,7 +24,7 @@
                                 <th>Perihal</th>
                                 <th>Sifat</th>
                                 <th>Status Disposisi</th>
-                                <th>Status Kabid</th>
+                                <th>Status Surat</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -5,6 +5,15 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Tambah Pengguna Baru</h4>
+                            @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <form method="POST" action="">
                 @csrf
 
