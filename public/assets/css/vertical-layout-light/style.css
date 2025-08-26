@@ -30683,9 +30683,80 @@ table.dataTable tbody td.select-checkbox:after {
   padding-top: 0.5rem;
 }
 
- html {
-        scroll-behavior: smooth;
-    }
+.table td {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+
+.track {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  position: relative;
+}
+
+.track::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #dcdcdc;
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+}
+
+.step .circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #dcdcdc;
+  margin: 0 auto;
+  display: block;
+}
+
+.step.active .circle {
+  /* background: #007bff; */
+  background-color: #2563EB;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px #2563EB, 0 0 10px #3B82F6, 0 0 15px #60A5FA;
+  }
+
+  50% {
+    box-shadow: 0 0 15px #2563EB, 0 0 30px #3B82F6, 0 0 45px #60A5FA;
+  }
+
+  100% {
+    box-shadow: 0 0 5px #2563EB, 0 0 10px #3B82F6, 0 0 15px #60A5FA;
+  }
+}
+
+.step .label {
+  margin-top: 8px;
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #999;
+}
+
+.step.active .label {
+  color: #007bff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 .datepicker>div {
   display: initial;

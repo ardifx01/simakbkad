@@ -19,27 +19,67 @@
 
 
 
-                <form id="form-surat" method="POST" action="{{ route('admin.suratmasuk.store') }}" enctype="multipart/form-data">
+                <form id="form-surat" method="POST" action="{{ route('admin.suratmasuk.store') }}"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
                         {{-- Kolom Kiri --}}
                         <div class="col-md-6">
-
+                            {{-- <div class="form-group">
+                                <label for="no_agenda">Nomor Agenda</label>
+                                <input placeholder="Masukkan nomor agenda" type="text" name="no_agenda" class="form-control" value="{{ old('no_agenda') }}">
+                            </div> --}}
                             <div class="form-group">
                                 <label for="no_surat">No. Surat</label>
-                                <input type="text" name="no_surat" class="form-control" value="{{ old('no_surat') }}">
+                                <input placeholder="Masukkan nomor surat" type="text" name="no_surat"
+                                    class="form-control" value="{{ old('no_surat') }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="asal_surat">Instansi Pengirim</label>
-                                <input type="text" name="asal_surat" class="form-control"
-                                    value="{{ old('asal_surat') }}">
+                                <input placeholder="Masukkan pengirim surat" type="text" name="asal_surat"
+                                    class="form-control" value="{{ old('asal_surat') }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="perihal">Perihal Surat</label>
-                                <input type="text" name="perihal" class="form-control" value="{{ old('perihal') }}">
+                                <input placeholder="Masukkan perihal surat" type="text" name="perihal"
+                                    class="form-control" value="{{ old('perihal') }}">
+                            </div>
+                            {{-- Upload File --}}
+                            <div class="form-group">
+                                <label for="file_surat">Upload File</label>
+                                <input type="file" id="file_surat" name="file_surat" class="form-control"
+                                    accept=".pdf,.jpg,.jpeg,.png">
+                                {{-- <input type="file" id="file_surat" name="file_surat" class="form-control"> --}}
+                                {{-- <small class="form-text text-danger">* semua file type diizinkan</small> --}}
+                            </div>
+                        </div>
+
+                        {{-- Kolom Kanan --}}
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label for="tanggal_surat">Tgl. Surat</label>
+                                <input type="date" name="tanggal_surat" class="form-control"
+                                    value="{{ old('tanggal_surat') }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tanggal_masuk">Diterima Tgl.</label>
+                                <input type="date" name="tanggal_masuk" class="form-control"
+                                    value="{{ old('tanggal_masuk') }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sifat">Sifat</label>
+                                <select name="sifat" class="form-control">
+                                    <option value="">-- Pilih Sifat --</option>
+                                    <option value="Biasa">Biasa</option>
+                                    <option value="Segera">Segera</option>
+                                    <option value="Rahasia">Rahasia</option>
+                                </select>
                             </div>
 
                             {{-- Jenis Surat --}}
@@ -47,6 +87,8 @@
                                 <label for="jenis_surat">Jenis Surat</label>
                                 <select id="jenis_surat" name="jenis_surat">
                                     <option value="">Cari...</option>
+                                    <option>LS (Langsung)</option>
+                                    <option>GU (Ganti Uang) / TU (Tambahan Uang)</option>
                                     <option>Piagam</option>
                                     <option>Notula</option>
                                     <option>Laporan</option>
@@ -71,51 +113,16 @@
                                     <option>Surat Tanda Tamat Pendidikan & Pelatihan</option>
                                 </select>
                             </div>
-                            {{-- Upload File --}}
-                            <div class="form-group">
-                                <label for="file_surat">Upload File</label>
-                                <input type="file" name="file_surat" class="form-control">
-                                {{-- <small class="form-text text-danger">* semua file type diizinkan</small> --}}
-                            </div>
-                        </div>
-
-                        {{-- Kolom Kanan --}}
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="tanggal_surat">Tgl. Surat</label>
-                                <input type="date" name="tanggal_surat" class="form-control"
-                                    value="{{ old('tanggal_surat') }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="tanggal_masuk">Diterima Tgl.</label>
-                                <input type="date" name="tanggal_masuk" class="form-control"
-                                    value="{{ old('tanggal_masuk') }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="no_agenda">No. Agenda</label>
-                                <input type="text" name="no_agenda" class="form-control" value="{{ old('no_agenda') }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sifat">Sifat</label>
-                                <select name="sifat" class="form-control">
-                                    <option value="">-- Pilih Sifat --</option>
-                                    <option value="Biasa">Biasa</option>
-                                    <option value="Segera">Segera</option>
-                                    <option value="Rahasia">Rahasia</option>
-                                </select>
-                            </div>
-
 
                         </div>
                     </div>
                     {{-- Tombol Aksi --}}
-                    <div class="d-flex justify-content">
+                    <div class="card-footer text-end bg-light rounded-bottom">
                         {{-- <a href="{{ route('admin.dataSuratMasuk') }}" class="btn btn-danger mr-2">Tutup</a> --}}
                         <button type="submit" class="btn btn-primary"> <i class="ti-save"></i> Simpan</button>
+                        <a href="{{ route('admin.dataSuratMasuk') }}" class="btn btn-secondary shadow-sm">
+                            <i class="ti-close"></i> Batal
+                        </a>
                     </div>
                 </form>
             </div>
@@ -132,4 +139,3 @@
         });
     </script>
 @endpush
-

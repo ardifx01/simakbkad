@@ -19,7 +19,8 @@
                                 <th>No Ekspedisi</th>
                                 <th>Nomor Surat</th>
                                 <th>Tanggal</th>
-                                <th>Pengirim</th>
+                                <th>Asal Surat</th>
+                                <th>Perihal</th>
                                 <th>Penerima Surat</th>
                             </tr>
                         </thead>
@@ -31,7 +32,8 @@
                                     <td>{{ $ekspedisi->nomor_surat }}</td>
                                     <td>{{ \Carbon\Carbon::parse($ekspedisi->tanggal)->format('d M Y') }}</td>
                                     <td>{{ $ekspedisi->sipengirim }}</td>
-                                    <td>{{ $ekspedisi->sipenerima }}</td>
+                                    <td>{{ $ekspedisi->perihal }}</td>
+                                    <td><b>{{ $ekspedisi->sipenerima }}</b></td>
                                 </tr>
                             @empty
                                 {{-- <tr>

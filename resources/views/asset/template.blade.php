@@ -13,6 +13,7 @@
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select.dataTables.min.css') }}">
     <!-- End plugin css for this page -->
@@ -34,6 +35,15 @@
 </head>
 
 <body>
+    <!-- Overlay animasi logout -->
+    <div id="logout-loading"
+        style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: rgba(0,0,0,0.5); z-index:9999; 
+            justify-content:center; align-items:center;">
+        <lottie-player src="{{ asset('lottie/loading.json') }}" background="transparent" speed="0.5"
+            style="width: 400px; height: 400px;" loop autoplay>
+        </lottie-player>
+    </div>
     <div class="container-scroller">
 
         {{-- BAGIAN NAVBAR --}}
@@ -88,7 +98,7 @@
     <!-- JQuery & DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+    @stack('waktu')
     <script>
         $(document).ready(function() {
             $('#suratTable').DataTable({
@@ -132,7 +142,20 @@
             });
         });
     </script>
+    <!-- Panggil Lottie player script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
+    <!-- Script -->
+    <script>
+        function showLogoutLoading() {
+            let overlay = document.getElementById('logout-loading');
+            overlay.style.display = 'flex'; // tampilkan overlay
+
+            setTimeout(function() {
+                document.getElementById('logout-form').submit();
+            }, 1500); // delay biar animasi terlihat
+        }
+    </script>
 </body>
 
 </html>

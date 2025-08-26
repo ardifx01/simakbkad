@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bidang;
 use App\Http\Controllers\Controller;
 use App\Models\Disposisi;
 use App\Models\SuratMasuk;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,8 @@ class KepalaController extends Controller
     {
         // $surats = SuratMasuk::latest()->get();
         $surats = SuratMasuk::where('status_disposisi', 'Belum')
-        ->where('status_kabid', 'Belum Selesai')
-        ->get();
+            ->where('status_kabid', 'Belum Selesai')
+            ->get();
         return view('kepala.dataSuratMasuk', compact('surats'));
     }
     public function show($id)
@@ -30,6 +31,32 @@ class KepalaController extends Controller
         return view('kepala.arsip', compact('surats'));
     }
 
+
+    public function index(Request $request)
+    {
+        // $totalSurat = SuratMasuk::count();
+        $totalArsipSurat = SuratMasuk::where('status_disposisi', 'Didisposisikan')->count();
+        $belumDisposisi = SuratMasuk::where('status_disposisi', 'Belum')->count();
+        $sudahDisposisi = SuratMasuk::where('status_disposisi', 'Didisposisikan')->count();
+        $surats = SuratMasuk::where(function ($q) {
+            // tampilkan semua surat yang belum selesai
+            $q->whereNull('tanggal_selesai')
+                ->orWhere('tanggal_selesai', '>=', now()->startOfDay());
+        })
+            ->latest()
+            ->get();
+
+        $steps = ['Kepala Badan', 'Sekretaris', 'Kepala', 'Selesai'];
+
+        return view('kepala.dashboard', compact(
+            'totalArsipSurat',
+            'belumDisposisi',
+            'sudahDisposisi',
+            'surats',
+            'steps'
+
+        ));
+    }
 
 
 

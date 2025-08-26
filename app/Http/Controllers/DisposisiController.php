@@ -23,11 +23,19 @@ class DisposisiController extends Controller
     {
         $request->validate([
             'surat_id' => 'required|exists:surat_masuks,id',
-            'kepada_bidang' => 'required|array',
+            'kepada_bidang' => 'required|array|min:1',
             'kepada_bidang.*' => 'string',
             'isi_disposisi' => 'required|string',
-            'tindakan' => 'nullable|array',
+            'tindakan' => 'required|array|min:1',
+        ], [
+            'isi_disposisi' => 'Disposisi tidak bisa kosong!',
+            'kepada_bidang.required' => 'Minimal pilih satu bidang tujuan!',
+            'tindakan.required' => 'Minimal pilih satu tindakan!',
         ]);
+        // ✅ Pastikan Sekretaris dipilih
+        if (!in_array('Sekretaris', $request->kepada_bidang)) {
+            return back()->withErrors(['kepada_bidang' => 'Sekretaris wajib dipilih!'])->withInput();
+        }
 
         Disposisi::create([
             'surat_id' => $request->surat_id,
@@ -36,7 +44,6 @@ class DisposisiController extends Controller
             'isi_disposisi' => $request->isi_disposisi,
             'tindakan' => implode(', ', $request->tindakan ?? []),
             'dari_id' => Auth::id(),
-            // 'status' => 'Menunggu Sekretaris', // <-- tambahan status
         ]);
 
         $surat = SuratMasuk::find($request->surat_id);
@@ -88,7 +95,7 @@ class DisposisiController extends Controller
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->whereHas('surat', function ($q) {
                 $q->where('status_kabid', 'Belum Selesai')
-                ->where('status_sekretaris', 'didistribusikan');
+                    ->where('status_sekretaris', 'didistribusikan');
             })
             ->latest()
             ->get();
@@ -132,7 +139,7 @@ class DisposisiController extends Controller
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->whereHas('surat', function ($q) {
                 $q->where('status_kabid', 'Belum Selesai')
-                ->where('status_sekretaris', 'didistribusikan');
+                    ->where('status_sekretaris', 'didistribusikan');
             })
             ->latest()
             ->get();
@@ -177,7 +184,7 @@ class DisposisiController extends Controller
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->whereHas('surat', function ($q) {
                 $q->where('status_kabid', 'Belum Selesai')
-                ->where('status_sekretaris', 'didistribusikan');
+                    ->where('status_sekretaris', 'didistribusikan');
             })
             ->latest()
             ->get();
@@ -201,7 +208,7 @@ class DisposisiController extends Controller
     {
         $surats = SuratMasuk::where('status_kabid', 'selesai')
             ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID ANGGARAN%');
+                $q->where('kepada_bidang', 'LIKE', '%KABID PENGANGGARAN%');
             })
             ->get();
 
@@ -222,7 +229,7 @@ class DisposisiController extends Controller
         $disposisis = Disposisi::where('kepada_bidang', 'LIKE', '%' . $nama_bidang . '%')
             ->whereHas('surat', function ($q) {
                 $q->where('status_kabid', 'Belum Selesai')
-                ->where('status_sekretaris', 'didistribusikan');
+                    ->where('status_sekretaris', 'didistribusikan');
             })
             ->latest()
             ->get();

@@ -20,9 +20,19 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="charts"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="ti-power-off menu-icon"></i>
+                <span class="menu-title">Keluar</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </li> --}}
+         <!-- Menu Logout -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="event.preventDefault(); showLogoutLoading();">
                 <i class="ti-power-off menu-icon"></i>
                 <span class="menu-title">Keluar</span>
             </a>

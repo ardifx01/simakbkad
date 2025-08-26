@@ -158,6 +158,7 @@ class BidangController extends Controller
             'no'           => $this->generateNoEkspedisi(),
             'sipengirim'   => $surat->asal_surat,
             'sipenerima'   => $role,
+            'perihal'      => $surat->perihal,
             'nomor_surat'  => $surat->no_surat,
             'tanggal'      => $surat->tanggal_surat,
         ]);

@@ -39,10 +39,34 @@
                     <div class="card-header text-white" style="background-color: #4f7ba2;">
                         <strong>📎 Preview Surat</strong>
                     </div>
-                    <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 500px;">
+                    {{-- <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 500px;">
                         <embed src="{{ asset('storage/' . $surat->file_surat) }}" type="application/pdf" width="100%"
                             height="500px" />
-                    </div>
+                    </div> --}}
+                  <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 500px;">
+    @php
+        $file = $surat->file_surat;
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    @endphp
+
+    @if(in_array($extension, ['jpg','jpeg','png','gif','webp']))
+        {{-- Jika file berupa gambar --}}
+        <img src="{{ asset('storage/' . $file) }}"
+             alt="Preview Surat"
+             style="max-height:500px; max-width:100%; object-fit:contain; border-radius:8px;">
+    @elseif($extension === 'pdf')
+        {{-- Jika file berupa PDF --}}
+        <embed src="{{ asset('storage/' . $file) }}"
+               type="application/pdf"
+               width="100%"
+               height="500px" />
+    @else
+        {{-- Jika file bukan gambar / PDF --}}
+        <p>File tidak bisa dipreview. <a href="{{ asset('storage/' . $file) }}" target="_blank">Download di sini</a>.</p>
+    @endif
+</div>
+
+
                 </div>
             </div>
 

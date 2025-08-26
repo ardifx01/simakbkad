@@ -15,14 +15,16 @@
             </a>
             <div class="collapse" id="suratmasuk">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('sekretaris.dataSuratMasuk') }}">Surat Masuk</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('sekretaris.suratmasuk.selesai') }}">Arsip Surat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('sekretaris.dataSuratMasuk') }}">Surat
+                            Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('sekretaris.suratmasuk.selesai') }}">Arsip
+                            Surat</a></li>
                 </ul>
             </div>
         </li>
+        <!-- Menu Logout -->
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="charts"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="nav-link" href="#" onclick="event.preventDefault(); showLogoutLoading();">
                 <i class="ti-power-off menu-icon"></i>
                 <span class="menu-title">Keluar</span>
             </a>

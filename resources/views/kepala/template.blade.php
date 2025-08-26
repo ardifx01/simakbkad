@@ -23,18 +23,21 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logoDairi.png') }}" />
     <!-- Tambahkan di <head> -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
-    <style>
-        .table td {
-            white-space: normal !important;
-            word-wrap: break-word;
-        }
-    </style>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
 </head>
 
 <body>
+    <!-- Overlay animasi logout -->
+    <div id="logout-loading"
+        style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: rgba(0,0,0,0.5); z-index:9999; 
+            justify-content:center; align-items:center;">
+        <lottie-player src="{{ asset('lottie/loading.json') }}" background="transparent" speed="0.5"
+            style="width: 400px; height: 400px;" loop autoplay>
+        </lottie-player>
+    </div>
     <div class="container-scroller">
 
         {{-- BAGIAN NAVBAR --}}
@@ -69,6 +72,8 @@
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <script src="{{ asset('assets/js/settings.js') }}"></script>
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
+    @stack('waktu')
+
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
@@ -100,7 +105,7 @@
                     zeroRecords: "Data surat tidak ditemukan",
                     info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
                     infoEmpty: "Tidak ada data surat!",
-                    paginate: { 
+                    paginate: {
                         previous: "Sebelumnya",
                         next: "Berikutnya"
                     }
@@ -134,6 +139,20 @@
         });
     </script>
     @stack('scripts')
+    <!-- Panggil Lottie player script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Script -->
+    <script>
+        function showLogoutLoading() {
+            let overlay = document.getElementById('logout-loading');
+            overlay.style.display = 'flex'; // tampilkan overlay
+
+            setTimeout(function() {
+                document.getElementById('logout-form').submit();
+            }, 1500); // delay biar animasi terlihat
+        }
+    </script>
 
 </body>
 

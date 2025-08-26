@@ -21,6 +21,7 @@ class SuratMasuk extends Model
         'perihal',
         'file_surat',
         'no_agenda',
+        'kategori_agenda',
         'sifat',
         'created_by',
         'status_disposisi',

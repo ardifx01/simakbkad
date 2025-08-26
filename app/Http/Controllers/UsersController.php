@@ -57,4 +57,33 @@ class UsersController extends Controller
 
         return back()->with('success', 'Status pengguna berhasil diperbarui.');
     }
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $roles = Role::all(); // kalau ada role
+        return view('admin.edit', compact('user', 'roles'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role_id' => 'required|integer',
+            'password' => 'nullable|min:6|confirmed'
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'Data pengguna berhasil diperbarui!');
+    }
 }

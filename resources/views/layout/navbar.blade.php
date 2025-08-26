@@ -15,9 +15,9 @@
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show d-flex align-items-center"
                                 role="alert">
-                                <img src="{{ asset('assets/images/check.webp') }}" alt="cek" width="20" height="20"
-                                    class="me-2 mr-2">  
-                                 <span> {{ session('success') }}</span>
+                                <img src="{{ asset('assets/images/check.webp') }}" alt="cek" width="20"
+                                    height="20" class="me-2 mr-2">
+                                <span> {{ session('success') }}</span>
                                 <button type="button" class="close ms-auto" data-dismiss="alert" aria-label="Tutup">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -26,7 +26,26 @@
 
                         @if (session('info'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('info') }}
+                                <img src="{{ asset('assets/images/check.webp') }}" alt="cek" width="20"
+                                    height="20" class="me-2 mr-2">
+                                <span> {{ session('info') }}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Tutup">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+                        {{-- Pesan Error dari Validasi --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <img src="{{ asset('assets/images/warning.png') }}" alt="cek"
+                                            width="20" height="20" class="me-2 mr-2">
+                                        <span> {{ $error }} <br> </span>
+                                        {{-- {{ $error }} <br> --}}
+                                    @endforeach
+                                </ul>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Tutup">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -36,41 +55,20 @@
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
-                        data-toggle="dropdown">
-                        <i class="icon-bell mx-0"></i>
-                        <span class="count"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                        aria-labelledby="notificationDropdown">
-                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                        <a class="dropdown-item preview-item">
-                            <div class="preview-thumbnail">
-                                <div class="preview-icon bg-success">
-                                    <i class="ti-info-alt mx-0"></i>
-                                </div>
-                            </div>
-                            <div class="preview-item-content">
-                                <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                                <p class="font-weight-light small-text mb-0 text-muted">
-                                    Just now
-                                </p>
-                            </div>
-                        </a>
-                        <a class="dropdown-item preview-item">
-                            <div class="preview-thumbnail">
-                                <div class="preview-icon bg-warning">
-                                    <i class="ti-settings mx-0"></i>
-                                </div>
-                            </div>
-                            <div class="preview-item-content">
-                                <h6 class="preview-subject font-weight-normal">Settings</h6>
-                                <p class="font-weight-light small-text mb-0 text-muted">
-                                    Private message
-                                </p>
-                            </div>
-                        </a>
+
+                <li class="nav-item">
+                    <span id="world-clock"
+                        style="font-weight:bold; font-size:14px; border: 1px solid #001789; padding: 3px 6px; border-radius: 6px; background:#f8f9fa;">
+                        <i class="bi bi-clock"></i> <span id="clock-text"></span>
+                    </span>
+
+                </li>
+
+                {{-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                    aria-labelledby="notificationDropdown">
+                    <p class="mb-0 font-weight-normal float-left dropdown-header">Histori Login</p>
+
+                    @forelse($loginHistories as $history)
                         <a class="dropdown-item preview-item">
                             <div class="preview-thumbnail">
                                 <div class="preview-icon bg-info">
@@ -78,27 +76,46 @@
                                 </div>
                             </div>
                             <div class="preview-item-content">
-                                <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                <h6 class="preview-subject font-weight-normal">
+                                    {{ $history->user->nama }}
+                                </h6>
                                 <p class="font-weight-light small-text mb-0 text-muted">
-                                    2 days ago
+                                    {{ $history->login_at->format('d-m-Y H:i:s') }}
+                                    | {{ $history->ip_address }}
                                 </p>
                             </div>
                         </a>
-                    </div>
-                </li>
+                    @empty
+                        <p class="text-center text-muted p-2">Belum ada histori login</p>
+                    @endforelse
+                    
+                </div> --}}
+
+
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-toggle="dropdown"
                         id="profileDropdown">
-                        {{-- Nama user --}}
-                        <span class="mr-2 d-none d-lg-inline text-black small">
-                            {{ Auth::user()->nama }}
+                        <span class="mr-2 d-none d-lg-inline text-black small px-2 py-1 rounded"
+                            style="border: 1px solid #333; background-color: #f0f0f0; display: inline-block; text-align: left;">
+
+                            {{-- Nama User --}}
+                            <div class="fw-bold mb-0" style="font-size: 14px; line-height: 1.2;">
+                                {{ Auth::user()->nama }}
+                            </div>
+
+                            {{-- Role User --}}
+                            <div class="text-muted mt-0" style="font-size: 12px; line-height: 1.1;">
+                                <b>{{ Auth::user()->role->nama_role }}</b>
+                            </div>
                         </span>
+
+
                         {{-- Icon user --}}
                         <i class="ti-user mx-0" style="font-size: 22px;" alt="profile"></i>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                        <a href="#" class="dropdown-item"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); showLogoutLoading();">
                             <i class="ti-power-off text-primary"></i> Logout
                         </a>
 
@@ -115,6 +132,24 @@
             </button>
         </div>
     </nav>
+    @push('waktu')
+        <script>
+            function updateClock() {
+                const options = {
+                    timeZone: 'Asia/Jakarta',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                };
+
+                const now = new Date().toLocaleTimeString('en-GB', options);
+                document.getElementById('clock-text').innerText = now;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
+    @endpush
     <!-- Modal Profil -->
     {{-- <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
         aria-hidden="true">

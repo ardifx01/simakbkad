@@ -33,8 +33,9 @@
                   <div class="col-md-12 grid-margin transparent">
                       <div class="row">
                           <div class="col-md-3 mb-3">
-                              <div class="card text-white"
-                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                              <div onclick="window.location.href='{{ route('admin.dataSuratMasuk') }}'"
+                                  class="card text-white"
+                                  style="cursor: pointer; background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
                                   <div class="card-body d-flex align-items-center justify-content-between">
                                       <div class="d-flex align-items-center">
                                           <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
@@ -48,8 +49,9 @@
                               </div>
                           </div>
                           <div class="col-md-3 mb-3">
-                              <div class="card text-white"
-                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                              <div onclick="window.location.href='{{ route('admin.suratmasuk.selesai') }}'"
+                                  class="card text-white"
+                                  style="cursor: pointer; background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
                                   <div class="card-body d-flex align-items-center justify-content-between">
                                       <div class="d-flex align-items-center">
                                           <img src="{{ asset('assets/images/File_Box-128.webp') }}" alt="Icon Arsip"
@@ -74,13 +76,15 @@
                                               </p>
                                           </div>
                                       </div>
-                                      <h2 class="mb-0" style="font-weight: 700;">{{ $totalSurat ?? 0 }}</h2>
+                                      <h2 class="mb-0" style="font-weight: 700;">
+                                          {{ $totalSurat }}</h2>
                                   </div>
                               </div>
                           </div>
                           <div class="col-md-3 mb-3">
-                              <div class="card text-white"
-                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                              <div onclick="window.location.href='{{ route('admin.users.index') }}'"
+                                  class="card text-white"
+                                  style="cursor: pointer; background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
                                   <div class="card-body d-flex align-items-center justify-content-between">
                                       <div class="d-flex align-items-center">
                                           <img src="{{ asset('assets/images/logo_user.png') }}" alt="Icon Barang"
@@ -166,7 +170,7 @@
                                   @empty
                                       <div class="text-center py-4">
                                           <p class="mb-0" style="font-size: 14px; color: #000000;">
-                                              <i class="bi bi-inbox"></i> Surat masuk tidak tersedia!
+                                              <i class="bi bi-inbox"></i> Proses surat masuk tidak tersedia / sudah selesai!
                                           </p>
                                       </div>
                                   @endforelse
@@ -177,12 +181,26 @@
                           <div class="col-12 col-xl-4">
                               <div class="justify-content-end d-flex">
                                   <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+
+                                      <!-- Tombol Dropdown -->
                                       <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
                                           id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
                                           aria-expanded="true" style="border: 1px solid #838ac1; border-radius: 20px;">
                                           <i class="mdi mdi-calendar"></i>
-                                          {{ $filter == 'harian' ? 'Perhari' : ($filter == 'mingguan' ? 'Perminggu' : 'Perbulan') }}
+                                          @if ($filter == 'harian')
+                                              Perhari
+                                          @elseif($filter == 'mingguan')
+                                              Perminggu
+                                          @elseif($filter == 'bulanan')
+                                              Perbulan
+                                          @elseif($filter == 'tanggal')
+                                              Pertanggal
+                                          @else
+                                              Pilih Filter
+                                          @endif
                                       </button>
+
+                                      <!-- Isi Dropdown -->
                                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
                                           <a class="dropdown-item"
                                               href="{{ route('admin.dashboard', ['filter' => 'harian']) }}">
@@ -198,13 +216,74 @@
                                               href="{{ route('admin.dashboard', ['filter' => 'bulanan']) }}">
                                               <i class="bi bi-calendar-month"></i> Perbulan
                                           </a>
-
+                                          <!-- Pertanggal buka modal -->
+                                          <a class="dropdown-item" href="#" data-toggle="modal"
+                                              data-target="#filterTanggalModal">
+                                              <i class="bi bi-calendar-date"></i> Pertanggal
+                                          </a>
                                       </div>
-                                      <canvas id="suratMasukChart"></canvas>
+
+                                      @if (count($data) > 0)
+                                          <div class="card mt-4">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">📊 Jumlah Surat Masuk</h4>
+                                                  <canvas id="suratMasukChart" width="250" height="250"></canvas>
+                                              </div>
+                                          </div>
+                                      @elseif ($tanggal)
+                                          <p class="text-center mt-3"
+                                              style=" color: #000; background-color: #addcf5; border-radius: 12px; padding: 3px;">
+                                              Data surat di tanggal {{ $tanggal }} tidak ada!</p>
+                                      @else
+                                          <p class="text-center mt-3"
+                                              style=" color: #000; background-color: #addcf5; border-radius: 12px; padding: 3px;">
+                                              Data surat tidak ada!</p>
+                                      @endif
+                                  </div>
+                              </div>
+
+                              <!-- Chart Kategori Agenda, tepat di bawah Chart Surat Masuk -->
+                              @if (count($data) > 0)
+                                  <div class="card mt-4">
+                                      <div class="card-body">
+                                          <h4 class="card-title">📊 Jumlah Surat Masuk per Kategori Agenda</h4>
+                                          <canvas id="chartKategoriAgenda" width="250" height="250"></canvas>
+                                      </div>
+                                  </div>
+                              @elseif ($tanggal)
+                                  <p class="text-center mt-3"
+                                      style=" color: #000; background-color: #addcf5; border-radius: 12px; padding: 3px;">
+                                      Kategori surat di tanggal {{ $tanggal }} tidak ada!</p>
+                              @else
+                                  <p class="text-center mt-3"
+                                      style=" color: #000; background-color: #addcf5; border-radius: 12px; padding: 3px;">
+                                      Kategori surat tidak ada!</p>
+                              @endif
+                          </div>
+
+                          <!-- Modal Form Pilih Tanggal -->
+                          <div class="modal fade" id="filterTanggalModal" tabindex="-1" role="dialog"
+                              aria-labelledby="filterTanggalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-sm" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h6 class="modal-title" id="filterTanggalLabel">Filter Tanggal</h6>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <form action="{{ route('admin.dashboard') }}" method="GET">
+                                          <div class="modal-body">
+                                              <input type="hidden" name="filter" value="tanggal">
+                                              <input type="date" name="tanggal" class="form-control" required>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="submit" class="btn btn-primary btn-sm">Tampilkan</button>
+                                          </div>
+                                      </form>
                                   </div>
                               </div>
                           </div>
-
                       </div>
                   </div>
               </div>

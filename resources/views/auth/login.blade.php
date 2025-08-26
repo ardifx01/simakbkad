@@ -59,7 +59,7 @@
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth px-0"
-                style="background-image: url('{{ asset('assets/images/bg.jpeg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                style="background-image: url('{{ asset('assets/images/bkad.webp') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <div class="row w-100 mx-0">
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5"

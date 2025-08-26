@@ -12,12 +12,39 @@ use Illuminate\Support\Facades\Http;
 
 class SekretarisController extends Controller
 {
+    public function index(Request $request)
+    {
+        // $totalSurat = SuratMasuk::count();
+        $totalArsipSurat = SuratMasuk::where('status_sekretaris', 'Didistribusikan')->count();
+        $belumDistribusi = SuratMasuk::where('status_sekretaris', 'Belum didistribusikan')
+            ->where('status_disposisi', 'didisposisikan')
+            ->count();
+
+        $surats = SuratMasuk::where(function ($q) {
+            // tampilkan semua surat yang belum selesai
+            $q->whereNull('tanggal_selesai')
+            ->where('status_disposisi', 'didisposisikan')
+                ->orWhere('tanggal_selesai', '>=', now()->startOfDay());
+        })
+            ->latest()
+            ->get();
+
+        $steps = ['Kepala Badan', 'Sekretaris', 'Kepala', 'Selesai'];
+
+        return view('sekretaris.dashboard', compact(
+            'totalArsipSurat',
+            'belumDistribusi',
+            'surats',
+            'steps'
+
+        ));
+    }
     public function dataSuratMasuk()
     {
         // Ambil surat yang sudah didisposisikan ke Sekretaris
         $surats = SuratMasuk::whereHas('disposisi', function ($query) {
             $query->where('kepada_bidang', 'LIKE', '%Sekretaris%')
-            ->where('status_sekretaris', 'Belum Didistribusikan');
+                ->where('status_sekretaris', 'Belum Didistribusikan');
         })
             ->latest()
             ->get();

@@ -38,18 +38,26 @@
                                     <td>{{ $user->role->nama_role ?? '-' }}</td>
 
                                     <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M Y') }}</td>
-                                    <td>
+                                    <td class="d-flex gap-1">
+                                        {{-- Tombol Edit --}}
+                                        <a href="{{ route('admin.user.edit', $user->id) }}"
+                                            class="btn btn-sm btn-primary mr-1">
+                                            <i class="ti-pencil"></i> Edit
+                                        </a>
+
+                                        {{-- Form Aktif/Nonaktif --}}
                                         <form action="{{ route('admin.user.toggleStatus', $user->id) }}" method="POST"
                                             onsubmit="return confirm('Yakin ingin mengubah status pengguna ini?');">
                                             @csrf
                                             @method('PATCH')
                                             @if ($user->is_active)
-                                                <button class="btn btn-sm btn-warning">Nonaktifkan</button>
+                                                <button class="btn btn-sm btn-warning" style="color: #292929" ><i class="ti-lock" style="color: #292929"></i>Nonaktifkan</button>
                                             @else
-                                                <button class="btn btn-sm btn-success">Aktifkan</button>
+                                                <button class="btn btn-sm btn-success"><i class="ti-unlock"></i>Aktifkan</button>
                                             @endif
                                         </form>
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>

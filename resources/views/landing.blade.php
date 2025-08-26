@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SIMAK BKAD DAIRI - Sistem Informasi Manajemen Surat</title>
+    <title>SIMAK - BKAD DAIRI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/logoDairi.png') }}" />
     <style>
         :root {
             --primary-color: #4688ce;
@@ -216,26 +217,32 @@
                     </a>
                 </div>
 
-                <!-- Gambar -->
                 <div class="col-lg-6 text-center mt-5 mt-lg-0" data-aos="zoom-in">
-                    <div style="position: relative; display: inline-block;">
+                    <div style="position: relative; display: inline-block; padding: 20px;">
+
+                        <!-- Shape Abstrak -->
                         <div
-                            style="position: absolute; top: -20px; left: -20px; width: 120%; height: 120%; border: 2px dashed #f1c40f; border-radius: 50%; animation: rotate 20s linear infinite;">
+                            style="
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 400px; height: 300px;
+      background: radial-gradient(circle at 30% 30%, #6bddfa, transparent 70%);
+      border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
+      transform: translate(-50%, -50%) rotate(15deg);
+      filter: blur(40px);
+      z-index: 1;">
                         </div>
+
+                        <!-- Gambar -->
                         <img src="{{ asset('assets/images/bg1.png') }}" alt="Ilustrasi Surat"
-                            class="img-fluid rounded" style="max-height: 360px; position: relative; z-index: 2;">
+                            class="img-fluid rounded shadow-lg"
+                            style="max-height: 340px; position: relative; z-index: 2;">
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Elemen dekoratif latar belakang -->
-        <div
-            style="position: absolute; top: 0; right: 0; width: 250px; height: 250px; background: radial-gradient(circle, #1f2e78, transparent); border-radius: 50%; opacity: 0.2;">
-        </div>
+                <div
+                    style="position: absolute; top: 0; right: 0; width: 250px; height: 250px; background: radial-gradient(circle, #1f2e78, transparent); border-radius: 50%; opacity: 0.2;">
+                </div>
     </header>
-
-    <!-- Animasi rotasi -->
     <style>
         @keyframes rotate {
             0% {
@@ -247,8 +254,6 @@
             }
         }
     </style>
-
-
 
     <section id="fitur" class="section-padding bg-light">
         <div class="container">
@@ -265,8 +270,8 @@
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-card">
                         <div class="icon-circle"><i class="bi bi-envelope-paper"></i></div>
-                        <h5>Pengarsipan Surat Keluar</h5>
-                        <p>Buat, lacak, dan arsipkan surat keluar dengan sistematis, menghindari kehilangan data.</p>
+                        <h5>Pengarsipan Surat Masuk</h5>
+                        <p>Pelacakan, dan Pengarsipkan surat masuk dengan sistematis, menghindari kehilangan data.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
@@ -294,17 +299,12 @@
                                     alt="Kantor BKAD Dairi">
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('assets/images/bkad1.webp') }}" class="d-block w-100 img-fluid"
-                                    alt="Gedung BKAD">
-                            </div>
-                            <div class="carousel-item">
                                 <img src="{{ asset('assets/images/bkad2.webp') }}" class="d-block w-100 img-fluid"
                                     alt="Staf BKAD">
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Teks -->
                 <div class="col-lg-6 ps-lg-4" data-aos="fade-left">
@@ -321,88 +321,89 @@
         </div>
     </section>
 
-
-
-    <footer class="py-5" style="background: linear-gradient(135deg, #7d9cca, #405980); color: #f8f9fa;">
+    <footer class="pt-3 pb-2" style="background: linear-gradient(135deg, #67a2c9, #6d96c9);
+color: #fefeff;
+">
         <div class="container" style="max-width: 1140px;">
-            <div class="row text-center text-md-start align-items-start">
+            <div class="row align-items-start justify-content-between">
 
                 <!-- Hubungi Kami -->
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3"> Hubungi Kami</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <i class="bi bi-whatsapp me-2 text-success fs-5"></i>
+                <div class="col-md-3 mb-4 text-start" style="padding-left:0;">
+                    <h5 class="fw-bold mb-3">Hubungi Kami</h5>
+                    <ul class="list-unstyled" style="margin-left: -10px;">
+                        <li class="mb-3 d-flex align-items-center">
+                            <img src="/assets/images/whatsapp.png" alt="WhatsApp" width="24" class="me-2">
                             <a href="https://web.whatsapp.com/" target="_blank"
-                                class="text-light text-decoration-none">
+                                class="text-light text-decoration-none" style="font-size:16px;">
                                 +628136464747
                             </a>
                         </li>
-                        <li>
-                            <i class="bi bi-envelope-fill me-2 fs-5"></i>
-                            <a href="mailto:cthemail@kemendagri.go.id" target="_blank"
-                                class="text-light text-decoration-none">
-                                cthemail@kemendagri.go.id
+                        <li class="d-flex align-items-center">
+                            <img src="/assets/images/gmail.png" alt="Email" width="24" class="me-2">
+                            <a href="mailto:bkaddairi@gmail.com" target="_blank"
+                                class="text-light text-decoration-none" style="font-size:16px;">
+                                bkaddairi@gmail.com
                             </a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Alamat Kantor -->
-                <div class="col-md-4 mb-4 text-center">
-                    <h5 class="fw-bold mb-3"> Alamat Kantor</h5>
-                    <p class="mb-2 text-center">
-                        Jl. Sisingamangaraja No.127,Kota Sidikalang, Kec. Sidikalang,Kabupaten Dairi, Sumatera Utara
-                        22218
-                    </p>
+                <div class="col-md-5 mb-4 text-center">
+                    <h5 class="fw-bold mb-3">Alamat Kantor</h5>
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+                        <!-- Peta -->
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.2320167454254!2d98.3115856735954!3d2.747477097229727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303037e159f9aba1%3A0x3bf718031e5ced86!2sBadan%20Keuangan%20dan%20Aset%20Daerah%20(BKAD)%20Kabupaten%20Dairi!5e0!3m2!1sid!2sid!4v1754293414849!5m2!1sid!2sid"
+                            width="150" height="150" style="border:0; border-radius: 10px;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <!-- Teks Alamat -->
+                        <div style="max-width: 280px;">
+                            <p class="mb-0 text-start" style="line-height: 1.6; font-size:15px;">
+                                Jl. Sisingamangaraja No.127, Kec. Sidikalang,<br>
+                                Kabupaten Dairi, Sumatera Utara 22218
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Media Sosial -->
-                <div class="col-md-4 mb-4 text-md-end">
+                <div class="col-md-3 mb-4 ps-md-5">
                     <h5 class="fw-bold mb-3">Media Sosial Kami</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <a href="https://www.instagram.com/bkad_kabdairi/" target="_blank"
-                                class="text-decoration-none d-inline-flex align-items-center text-light"
-                                style="transition: background-color 0.3s ease;">
-                                <span
-                                    class="d-inline-flex justify-content-center align-items-center rounded-circle shadow-sm me-2"
-                                    style="width: 35px; height: 35px; background-color: white;">
-                                    <i class="bi bi-instagram text-danger fs-5"></i>
-                                </span>
-                                <span>@bkad_kabdairi</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/profile.php?id=61576860890036" target="_blank"
-                                class="text-decoration-none d-inline-flex align-items-center text-light"
-                                style="transition: background-color 0.3s ease;">
-                                <span
-                                    class="d-inline-flex justify-content-center align-items-center rounded-circle shadow-sm me-2"
-                                    style="width: 35px; height: 35px; background-color: white;">
-                                    <i class="bi bi-facebook text-primary fs-5"></i>
-                                </span>
-                                <span>bkad_kabdairi</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="d-flex flex-column gap-3">
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex align-items-center">
+                                <img src="/assets/images/instagram.png" alt="Instagram" width="30"
+                                    class="me-2">
+                                <a href="https://www.instagram.com/bkad_kabdairi/" target="_blank"
+                                    class="text-light text-decoration-none" style="font-size:16px;">
+                                    bkad_kabdairi
+                                </a>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <img src="/assets/images/facebook.png" alt="Facebook" width="30" class="me-2">
+                                <a href="https://www.facebook.com/profile.php?id=61576860890036" target="_blank"
+                                    class="text-light text-decoration-none" style="font-size:16px;">
+                                    bkad_kabdairi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
             </div>
-        </div>
-
-        <!-- Footer bawah -->
-        <div class="fixed-bottom text-center py-3 shadow-lg text-white fw-bold"
-            style="background: linear-gradient(90deg, #5c7db8, #2e3e5f); font-size: 1.1rem; z-index: 999;">
-            <small class="d-inline-block">
-                <i class="bi bi-c-circle me-1 text-white"></i>
-                2025 <span style="letter-spacing: 0.5px;">SIMAK Kantor BKAD Kabupaten Dairi</span>
-            </small>
         </div>
     </footer>
 
-
-
+    <div class="text-center py-3 shadow-lg text-white fw-bold"
+        style="background: linear-gradient(135deg, #74a3c2, #3f5c80);
+); 
+        font-size: 1.1rem; z-index: 999;">
+        <small class="d-inline-block">
+            <i class="bi bi-c-circle me-1 text-white"></i>
+            2025 <span style="letter-spacing: 0.5px;">SIMAK – Kantor BKAD Kabupaten Dairi</span>
+        </small>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

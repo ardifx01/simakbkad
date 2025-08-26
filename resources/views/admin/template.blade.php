@@ -23,78 +23,6 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logoDairi.png') }}" />
     <!-- Tambahkan di <head> -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
-    <style>
-        .table td {
-            white-space: normal !important;
-            word-wrap: break-word;
-        }
-
-        .track {
-            display: flex;
-            justify-content: space-between;
-            margin: 5px 0;
-            position: relative;
-        }
-
-        .track::before {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #dcdcdc;
-            z-index: 1;
-        }
-
-        .step {
-            position: relative;
-            text-align: center;
-            width: 100%;
-            z-index: 2;
-        }
-
-        .step .circle {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #dcdcdc;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .step.active .circle {
-            /* background: #007bff; */
-            background-color: #2563EB;
-            animation: pulse-glow 2s infinite;
-        }
-
-        @keyframes pulse-glow {
-            0% {
-                box-shadow: 0 0 5px #2563EB, 0 0 10px #3B82F6, 0 0 15px #60A5FA;
-            }
-
-            50% {
-                box-shadow: 0 0 15px #2563EB, 0 0 30px #3B82F6, 0 0 45px #60A5FA;
-            }
-
-            100% {
-                box-shadow: 0 0 5px #2563EB, 0 0 10px #3B82F6, 0 0 15px #60A5FA;
-            }
-        }
-
-        .step .label {
-            margin-top: 8px;
-            display: block;
-            font-size: 10px;
-            font-weight: 600;
-            color: #999;
-        }
-
-        .step.active .label {
-            color: #007bff;
-        }
-    </style>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -166,6 +94,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+    {{-- @stack('kategori') --}}
     <script>
         $(document).ready(function() {
             $('#suratTable').DataTable({
@@ -210,39 +139,75 @@
         });
     </script>
 
+    @stack('waktu')
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('suratMasukChart').getContext('2d');
-        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, '#AAB1DC');
-        gradient.addColorStop(0.5, '#7A85C1');
-        gradient.addColorStop(1, '#4F568B');
+        document.addEventListener("DOMContentLoaded", function() {
+                    // Chart Surat Masuk
+                    const ctxSurat = document.getElementById('suratMasukChart');
+                    if (ctxSurat) {
+                        const gradient = ctxSurat.getContext('2d').createLinearGradient(0, 0, 0, 400);
+                        gradient.addColorStop(0, '#AAB1DC');
+                        gradient.addColorStop(0.5, '#7A85C1');
+                        gradient.addColorStop(1, '#4F568B');
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @json($labels),
-                datasets: [{
-                    label: 'Jumlah Surat Masuk',
-                    data: @json($data),
-                    backgroundColor: gradient,
-                    borderColor: '#4F568B',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
+                        new Chart(ctxSurat, {
+                                type: 'pie',
+                                data: {
+                                    labels: @json($labels),
+                                    datasets: [{
+                                            label: 'Jumlah Surat Masuk',
+                                            data: @json($data),
+                                            backgroundColor: ["#6A8CAF", "#A2C7E5", "#C9E4DE", "#F0E5CF", "#E09F7D",
+                                                "#FFBCBC", "#F6C28B", "#DDAE7E", "#A3C9A8", "#84A59D",
+                                                "#E4C1F9", "#CDB4DB", "#FFC8DD", "#FFAFCC", "#BDE0FE",
+                                                "#A2D2FF", "#B5EAEA", "#EDF6F9", "#FFDDD2", "#E29578",
+                                                "#8E9AAF", "#CBC0D3", "#FFD6FF", "#EDE7E3", "#CCD5AE",
+                                                "#E9EDC9", "#FEFAE0", "#FAEDCD", "#D4A373", "#9D8189"],
+                                                borderColor: "#fff",
+                                                borderWidth: 2,
+                                                borderAlign: "inner"
+                                            }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'bottom'
+                                            }
+                                        }
+                                    }
+                                });
                         }
-                    }
-                }
-            }
-        });
+
+                        // Chart Kategori Agenda
+                        const ctxKategori = document.getElementById('chartKategoriAgenda');
+                        if (ctxKategori) {
+                            new Chart(ctxKategori, {
+                                type: 'pie',
+                                data: {
+                                    labels: @json($kategoriLabels),
+                                    datasets: [{
+                                        label: 'Jumlah Surat',
+                                        data: @json($kategoriData),
+                                        backgroundColor: ['#3B82F6', '#F59E0B', '#10B981'],
+                                        borderWidth: 2,
+                                        borderColor: '#fff'
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
     </script>
 
 

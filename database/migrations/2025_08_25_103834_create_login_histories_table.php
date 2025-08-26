@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ekspedisi_surat_masuks', function (Blueprint $table) {
+        Schema::create('login_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('no')->nullable();
-            $table->string('sipengirim');
-            $table->string('sipenerima');
-            $table->string('nomor_surat');
-            $table->string('perihal');
-            $table->date('tanggal');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('ip_address')->nullable();
+            $table->string('user_agent')->nullable();
+            $table->timestamp('login_at')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ekspedisi_surat_masuks');
+        Schema::dropIfExists('login_histories');
     }
 };

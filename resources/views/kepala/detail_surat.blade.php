@@ -25,6 +25,7 @@
                             <div class="col-md-6 border-right">
                                 <p><strong>Asal Surat:</strong> {{ $surat->asal_surat }}</p>
                                 <p><strong>No. Surat:</strong> {{ $surat->no_surat }}</p>
+                                <p><strong>Jenis Surat:</strong> {{ $surat->jenis_surat }}</p>
                                 <p><strong>Tanggal Surat:</strong>
                                     {{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d F Y') }}</p>
                                 <p><strong>Tanggal Diterima:</strong>
@@ -52,13 +53,15 @@
                                     @foreach ($bidangs as $bidang)
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="kepada_bidang[]"
-                                                value="{{ $bidang }}" id="{{ $bidang }}">
+                                                value="{{ $bidang }}" id="{{ $bidang }}"
+                                                {{ is_array(old('kepada_bidang')) && in_array($bidang, old('kepada_bidang')) ? 'checked' : '' }}>
                                             <label class="form-check-label"
                                                 for="{{ $bidang }}">{{ $bidang }}</label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
+
                         </div>
 
                         <hr>
@@ -84,10 +87,11 @@
 
                             <div class="row ml-2">
                                 @foreach ($tindakans as $index => $tindakan)
-                                    <div class="col-md-4 mb-1"> {{-- kasih mb-2 biar lebih rapat --}}
+                                    <div class="col-md-4 mb-1">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="tindakan[]"
-                                                value="{{ $tindakan }}" id="tindakan_{{ $index }}">
+                                                value="{{ $tindakan }}" id="tindakan_{{ $index }}"
+                                                {{ is_array(old('tindakan')) && in_array($tindakan, old('tindakan')) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="tindakan_{{ $index }}">
                                                 {{ $tindakan }}
                                             </label>
@@ -98,12 +102,15 @@
                                 {{-- Lain-lain di kolom terakhir --}}
                                 <div class="col-md-4 mb-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="tindakan_lain_checkbox">
+                                        <input class="form-check-input" type="checkbox" id="tindakan_lain_checkbox"
+                                            {{ old('tindakan') && !empty(array_diff(old('tindakan'), $tindakans)) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="tindakan_lain_checkbox">Lain-lain</label>
                                     </div>
-                                    <div id="lainnya_wrapper" class="mt-1" style="display: none;">
+                                    <div id="lainnya_wrapper" class="mt-1"
+                                        style="{{ old('tindakan') && !empty(array_diff(old('tindakan'), $tindakans)) ? '' : 'display:none;' }}">
                                         <input type="text" name="tindakan[]" class="form-control form-control-sm"
-                                            placeholder="Tulis tindakan lainnya...">
+                                            placeholder="Tulis tindakan lainnya..."
+                                            value="{{ old('tindakan') ? implode('', array_diff(old('tindakan'), $tindakans)) : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -111,11 +118,13 @@
 
 
 
+
                         {{-- === CATATAN / ISI DISPOSISI === --}}
                         <div class="form-group mt-3">
                             <label for="isi_disposisi"><strong>Isi Disposisi:</strong></label>
-                            <textarea name="isi_disposisi" id="isi_disposisi" class="form-control" rows="3" required></textarea>
+                            <textarea name="isi_disposisi" id="isi_disposisi" class="form-control" rows="3">{{ old('isi_disposisi') }}</textarea>
                         </div>
+
 
                         <button type="submit" class="btn btn-success mt-2">
                             <i class="bi bi-send"></i> Kirim Disposisi

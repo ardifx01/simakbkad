@@ -16,6 +16,7 @@ class EkspedisiSuratMasuk extends Model
         'sipengirim',
         'sipenerima',
         'nomor_surat',
+        'perihal',
         'tanggal',
     ];
 

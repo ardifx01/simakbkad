@@ -24,15 +24,15 @@
                             <tr>
                                 {{-- <th>No</th> --}}
                                 <th>No Agenda</th>
-                                <th>No Surat</th>
-                                <th>Tgl Masuk</th>
+                                {{-- <th>No Surat</th> --}}
                                 <th>Perihal</th>
+                                <th>Tgl Masuk</th>
                                 <th>Asal</th>
                                 <th>Sifat</th>
                                 <th>Jenis</th>
                                 <th>Disposisi Kaban</th>
-                                <th>Status Kabid</th>
-                                <th></th>
+                                <th>Status Surat</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +42,11 @@
 
                                     {{-- <td>{{ $index + 1 }}</td> --}}
                                     <td>{{ $surat->no_agenda ?? '-' }}</td>
-                                    <td>{{ $surat->no_surat }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d M Y') }}</td>
+                                    {{-- <td>{{ $surat->no_surat }}</td> --}}
                                     <td style="white-space: normal; word-wrap: break-word; max-width: 200px;">
                                         {{ $surat->perihal }}
                                     </td>
+                                    <td>{{ \Carbon\Carbon::parse($surat->tanggal_masuk)->format('d M Y') }}</td>
                                     <td>{{ $surat->asal_surat }}</td>
                                     <td>{{ $surat->sifat ?? '-' }}</td>
                                     <td>{{ $surat->jenis_surat }}</td>
@@ -66,16 +66,19 @@
                                             <label class="badge badge-secondary">Proses</label>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="d-flex flex-column gap-2">
+                                        <a href="#"
+                                            class="mb-1 btn btn-sm btn-warning d-flex align-items-center justify-content-center">
+                                            <i class="ti-pencil mr-1"></i> Edit
+                                        </a>
                                         <form action="{{ route('admin.suratmasuk.destroy', $surat->id) }}" method="POST"
-                                            style="display:inline;">
+                                            style="margin:0;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                onclick="event.stopPropagation(); return confirm('Yakin ingin menghapus surat ini?')"
-                                                class="btn btn-link text-danger"
-                                                style="font-size: 20px; padding:0; border:none;">
-                                                <i class="ti-trash"></i>
+                                            onclick="event.stopPropagation(); return confirm('Yakin ingin menghapus surat ini?')"
+                                                class="btn btn-sm btn-danger d-flex align-items-center justify-content-center">
+                                                <i class="ti-trash mr-1"></i> Hapus
                                             </button>
                                         </form>
                                     </td>

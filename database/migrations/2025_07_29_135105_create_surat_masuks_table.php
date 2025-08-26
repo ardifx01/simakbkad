@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('surat_masuks', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_surat');
+            // $table->integer('agenda_number')->after('id');
             $table->string('no_surat');
             $table->date('tanggal_surat');
             $table->date('tanggal_masuk');
