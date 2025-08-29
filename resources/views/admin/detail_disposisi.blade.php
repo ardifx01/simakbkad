@@ -7,7 +7,7 @@
         </div>
 
         <div id="settings-trigger" title="Kembali ke Data Surat">
-            <a href="{{ route('admin.dataSuratMasuk') }}">
+            <a href="{{ route('admin.suratmasuk.disposisi') }}">
                 <i class="ti-arrow-left"></i>
             </a>
         </div>

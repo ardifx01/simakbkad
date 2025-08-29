@@ -36,4 +36,9 @@ class Disposisi extends Model
             ->withPivot('status', 'tanggal_selesai')
             ->withTimestamps();
     }
+    public function distribusi()
+    {
+        return $this->hasOne(DistribusiSurat::class, 'surat_id', 'surat_id');
+    }
+    
 }

@@ -114,30 +114,36 @@ Route::middleware(['auth', 'role:Sekretaris'])->group(function () {
 
 // === Bidang Aset ===
 Route::middleware(['auth', 'role:Bidang Asset'])->group(function () {
-    Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
+    // Route::get('/asset/dashboard', fn() => view('asset.dashboard'))->name('asset.dashboard');
+    Route::get('/asset/dashboard', [DisposisiController::class, 'dashboardAsset'])->name('asset.dashboard');
     Route::get('/asset/disposisi', [DisposisiController::class, 'disposisiAsset'])->name('asset.disposisi.index');
     Route::get('/asset/disposisi/{id}/detail', [DisposisiController::class, 'detailAsset'])->name('asset.disposisi.detail');
     Route::get('/asset/suratmasuk/arsip', [DisposisiController::class, 'arsip_surat_asset'])->name('asset.suratmasuk.selesai');
+    Route::get('/arsip/disposisi/{id}', [DisposisiController::class, 'cetakDisposisi'])->name('asset.arsip.disposisi');
     // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai1'])->name('kabid.disposisi.selesai');    
 });
 
 
 // === Bidang Akuntansi ===
 Route::middleware(['auth', 'role:Bidang Akuntansi'])->group(function () {
-    Route::get('/akuntansi/dashboard', fn() => view('akuntansi.dashboard'))->name('akuntansi.dashboard');
+    // Route::get('/akuntansi/dashboard', fn() => view('akuntansi.dashboard'))->name('akuntansi.dashboard');
+    Route::get('/akuntansi/dashboard', [DisposisiController::class, 'dashboardAkuntansi'])->name('akuntansi.dashboard');
     Route::get('/akuntansi/disposisi', [DisposisiController::class, 'disposisiAkuntansi'])->name('akuntansi.disposisi.index');
     Route::get('/akuntansi/disposisi/{id}/detail', [DisposisiController::class, 'detailAkuntansi'])->name('akuntansi.disposisi.detail');
     Route::get('/akuntansi/suratmasuk/arsip', [DisposisiController::class, 'arsip_surat_akuntansi'])->name('akuntansi.suratmasuk.selesai');
+    Route::get('/akuntansi/disposisi/{id}', [DisposisiController::class, 'cetakDisposisi'])->name('akuntansi.arsip.disposisi');
     // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai2'])->name('kabid.disposisi.selesai');
 });
 
 
 // === Bidang Anggaran ===
 Route::middleware(['auth', 'role:Bidang Anggaran'])->group(function () {
-    Route::get('/anggaran/dashboard', fn() => view('anggaran.dashboard'))->name('anggaran.dashboard');
+    // Route::get('/anggaran/dashboard', fn() => view('anggaran.dashboard'))->name('anggaran.dashboard');
+    Route::get('/anggaran/dashboard', [DisposisiController::class, 'dashboardAnggaran'])->name('anggaran.dashboard');
     Route::get('/anggaran/disposisi', [DisposisiController::class, 'disposisiAnggaran'])->name('anggaran.disposisi.index');
     Route::get('/anggaran/disposisi/{id}/detail', [DisposisiController::class, 'detailAnggaran'])->name('anggaran.disposisi.detail');
     Route::get('/anggaran/suratmasuk/arsip', [DisposisiController::class, 'arsip_surat_anggaran'])->name('anggaran.suratmasuk.selesai');
+    Route::get('/anggaran/arsip/disposisi/{id}', [DisposisiController::class, 'cetakDisposisi'])->name('anggaran.arsip.disposisi');
     // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai3'])->name('kabid.disposisi.selesai');
 
 });
@@ -145,10 +151,12 @@ Route::middleware(['auth', 'role:Bidang Anggaran'])->group(function () {
 
 // === Bidang Pembendaharaan ===
 Route::middleware(['auth', 'role:Bidang Pembendaharaan'])->group(function () {
-    Route::get('/pembendaharaan/dashboard', fn() => view('pembendaharaan.dashboard'))->name('pembendaharaan.dashboard');
+    // Route::get('/pembendaharaan/dashboard', fn() => view('pembendaharaan.dashboard'))->name('pembendaharaan.dashboard');
+    Route::get('/pembendaharaan/dashboard', [DisposisiController::class, 'dashboardBendahara'])->name('pembendaharaan.dashboard');
     Route::get('/pembendaharaan/disposisi', [DisposisiController::class, 'disposisiPembendaharaan'])->name('pembendaharaan.disposisi.index');
     Route::get('/pembendaharaan/disposisi/{id}/detail', [DisposisiController::class, 'detailPembendaharaan'])->name('pembendaharaan.disposisi.detail');
     Route::get('/bendahara/suratmasuk/arsip', [DisposisiController::class, 'arsip_surat_bendahara'])->name('bendahara.suratmasuk.selesai');
+    Route::get('/pembendaharaan/arsip/disposisi/{id}', [DisposisiController::class, 'cetakDisposisi'])->name('bendahara.arsip.disposisi');
     // Route::get('/kabid/disposisi/selesai/{id}', [BidangController::class, 'selesai4'])->name('kabid.disposisi.selesai');
 });
 

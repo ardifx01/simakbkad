@@ -71,7 +71,7 @@
                             <label><strong>Tindakan:</strong></label>
                             @php
                                 $tindakans = [
-                                    'Laksanakan Sesuai Ketentuan',
+                                    'Laksanakan Sesuai Petunjuk',
                                     'Buat Laporan',
                                     'Bicarakan / Koordinasikan dengan Saya',
                                     'Pelajari / Proses Sesuai Ketentuan',

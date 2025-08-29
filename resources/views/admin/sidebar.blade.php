@@ -27,7 +27,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                 aria-controls="form-elements">
-                <i class="ti-stats-up menu-icon"></i>
+                <i class="ti-harddrives menu-icon"></i>
                 <span class="menu-title">Arsip</span>
                 <i class="menu-arrow"></i>
             </a>

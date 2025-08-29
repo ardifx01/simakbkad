@@ -171,7 +171,7 @@ class BidangController extends Controller
 
 
     protected function generateNoEkspedisi()
-    {
+    {   
         return 'EXP-' . date('YmdHis');
     }
 

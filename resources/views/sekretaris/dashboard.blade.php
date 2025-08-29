@@ -113,40 +113,48 @@
                       <div class="row">
                           <!-- Surat Belum Didisposisikan -->
                           <div class="col-md-12 mb-3">
-                              <div class="card text-white"
-                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                                  <div class="card-body d-flex align-items-center justify-content-between">
-                                      <div class="d-flex align-items-center">
-                                          <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
-                                              style="width: 48px; height: 48px; margin-right: 15px;" />
-                                          <div>
-                                              <p class="mb-1" style="font-weight: 600; font-size: 18px;">
-                                                  Surat yang <br> belum didistribusikan
-                                              </p>
+                              <div onclick="window.location.href='{{ route('sekretaris.dataSuratMasuk') }}'"
+                                  class="card text-white gradient-card"
+                                  style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
+                                  <div class="card text-white"
+                                      style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                      <div class="card-body d-flex align-items-center justify-content-between">
+                                          <div class="d-flex align-items-center">
+                                              <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
+                                                  style="width: 48px; height: 48px; margin-right: 15px;" />
+                                              <div>
+                                                  <p class="mb-1" style="font-weight: 600; font-size: 18px;">
+                                                      Surat yang <br> belum didistribusikan
+                                                  </p>
+                                              </div>
                                           </div>
+                                          <h2 class="mb-0" style="font-weight: 700;">{{ $belumDistribusi ?? 0 }}
+                                          </h2>
                                       </div>
-                                      <h2 class="mb-0" style="font-weight: 700;">{{ $belumDistribusi ?? 0 }}
-                                      </h2>
                                   </div>
                               </div>
                           </div>
 
                           <!-- Surat Sudah Didisposisikan -->
                           <div class="col-md-12 mb-3">
-                              <div class="card text-white"
-                                  style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                                  <div class="card-body d-flex align-items-center justify-content-between">
-                                      <div class="d-flex align-items-center">
-                                          <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
-                                              style="width: 48px; height: 48px; margin-right: 15px;" />
-                                          <div>
-                                              <p class="mb-1" style="font-weight: 600; font-size: 18px;">
-                                                  Arsip Surat
-                                              </p>
+                              <div onclick="window.location.href='{{ route('sekretaris.suratmasuk.selesai') }}'"
+                                  class="card text-white gradient-card"
+                                  style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
+                                  <div class="card text-white"
+                                      style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                      <div class="card-body d-flex align-items-center justify-content-between">
+                                          <div class="d-flex align-items-center">
+                                              <img src="{{ asset('assets/images/File_Box-128.webp') }}" alt="Icon Surat"
+                                                  style="width: 48px; height: 48px; margin-right: 15px;" />
+                                              <div>
+                                                  <p class="mb-1" style="font-weight: 600; font-size: 18px;">
+                                                      Arsip Surat
+                                                  </p>
+                                              </div>
                                           </div>
+                                          <h2 class="mb-0" style="font-weight: 700;">{{ $totalArsipSurat ?? 0 }}
+                                          </h2>
                                       </div>
-                                      <h2 class="mb-0" style="font-weight: 700;">{{ $totalArsipSurat ?? 0 }}
-                                      </h2>
                                   </div>
                               </div>
                           </div>

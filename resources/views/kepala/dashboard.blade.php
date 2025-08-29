@@ -48,7 +48,9 @@
                         @forelse ($surats as $surat)
                             @php
                                 $lastDisposisi = $surat->disposisi->last();
-                                $kepada = $lastDisposisi ? array_map('trim', explode(',', $lastDisposisi->kepada_bidang)) : [];
+                                $kepada = $lastDisposisi
+                                    ? array_map('trim', explode(',', $lastDisposisi->kepada_bidang))
+                                    : [];
                                 $adaSekretaris = in_array('Sekretaris', $kepada);
                                 $kabidTujuan = collect($kepada)->first(fn($v) => str_contains($v, 'KABID'));
                             @endphp
@@ -65,14 +67,16 @@
                                         </div>
 
                                         {{-- Sekretaris --}}
-                                        <div class="step {{ $adaSekretaris || $surat->status_sekretaris == 'Selesai' ? 'active' : '' }}">
+                                        <div
+                                            class="step {{ $adaSekretaris || $surat->status_sekretaris == 'Selesai' ? 'active' : '' }}">
                                             <span class="circle"></span>
                                             <span class="label">Sekretaris</span>
                                         </div>
 
                                         {{-- Kabid --}}
                                         @if ($kabidTujuan)
-                                            <div class="step {{ $surat->status_sekretaris == 'didistribusikan' && $kabidTujuan ? 'active' : '' }}">
+                                            <div
+                                                class="step {{ $surat->status_sekretaris == 'didistribusikan' && $kabidTujuan ? 'active' : '' }}">
                                                 <span class="circle"></span>
                                                 <span class="label">{{ $kabidTujuan }}</span>
                                             </div>
@@ -106,38 +110,46 @@
                     <div class="row">
                         <!-- Surat Belum Didisposisikan -->
                         <div class="col-md-12 mb-3">
-                            <div class="card text-white"
-                                style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                                <div class="card-body d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
-                                            style="width: 48px; height: 48px; margin-right: 15px;" />
-                                        <div>
-                                            <p class="mb-1" style="font-weight: 600; font-size: 18px;">
-                                                Surat yang <br> belum didisposisikan
-                                            </p>
+                            <div onclick="window.location.href='{{ route('kepala.dataSuratMasuk') }}'"
+                                class="card text-white gradient-card"
+                                style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
+                                <div class="card text-white"
+                                    style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
+                                                style="width: 48px; height: 48px; margin-right: 15px;" />
+                                            <div>
+                                                <p class="mb-1" style="font-weight: 600; font-size: 18px;">
+                                                    Surat yang <br> belum didisposisikan
+                                                </p>
+                                            </div>
                                         </div>
+                                        <h2 class="mb-0" style="font-weight: 700;">{{ $belumDisposisi ?? 0 }}</h2>
                                     </div>
-                                    <h2 class="mb-0" style="font-weight: 700;">{{ $belumDisposisi ?? 0 }}</h2>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Surat Sudah Didisposisikan -->
                         <div class="col-md-12 mb-3">
-                            <div class="card text-white"
-                                style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                                <div class="card-body d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ asset('assets/images/2601790.png') }}" alt="Icon Surat"
-                                            style="width: 48px; height: 48px; margin-right: 15px;" />
-                                        <div>
-                                            <p class="mb-1" style="font-weight: 600; font-size: 18px;">
-                                                Arsip Surat
-                                            </p>
+                            <div onclick="window.location.href='{{ route('kepala.suratmasuk.selesai') }}'"
+                                class="card text-white gradient-card"
+                                style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
+                                <div class="card text-white"
+                                    style="background-color: #1951b3; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('assets/images/File_Box-128.webp') }}" alt="Icon Surat"
+                                                style="width: 48px; height: 48px; margin-right: 15px;" />
+                                            <div>
+                                                <p class="mb-1" style="font-weight: 600; font-size: 18px;">
+                                                    Arsip Surat
+                                                </p>
+                                            </div>
                                         </div>
+                                        <h2 class="mb-0" style="font-weight: 700;">{{ $totalArsipSurat ?? 0 }}</h2>
                                     </div>
-                                    <h2 class="mb-0" style="font-weight: 700;">{{ $totalArsipSurat ?? 0 }}</h2>
                                 </div>
                             </div>
                         </div>

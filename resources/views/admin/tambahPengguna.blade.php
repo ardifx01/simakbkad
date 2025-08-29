@@ -47,7 +47,7 @@
                     <input type="password" name="password_confirmation" class="form-control" required>
                 </div>
 
-                <button type="submit" class="btn btn-success">Simpan</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
                 <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Batal</a>
             </form>
         </div>

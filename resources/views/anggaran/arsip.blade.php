@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Lembar Disposisi</th>
                                 <th>No. Agenda</th>
                                 <th>No Surat</th>
                                 <th>Tanggal Masuk</th>
@@ -25,6 +26,14 @@
                                     data-href="{{ $surat->file_surat ? asset('storage/' . $surat->file_surat) : '#' }}"
                                     style="cursor: pointer;">
                                     <td>{{ $index + 1 }}</td>
+                                    <td>
+                                        <a href="{{ route('asset.arsip.disposisi', $surat->id) }}" target="_blank"
+                                            onclick="event.stopPropagation();"
+                                            class="mb-1 btn btn-sm btn-primary d-flex align-items-center justify-content-center">
+                                            Buka
+                                        </a>
+
+                                    </td>
                                     <td>{{ $surat->no_agenda }}</td>
                                     <td>{{ $surat->no_surat }}</td>
                                     <td>{{ $surat->tanggal_masuk }}</td>
@@ -42,25 +51,23 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".clickable-row").forEach(row => {
-            row.addEventListener("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (this.dataset.href && this.dataset.href !== '#') {
-                    let link = document.createElement('a');
-                    link.href = this.dataset.href;
-                    link.target = '_blank'; // paksa tab baru
-                    link.rel = 'noopener noreferrer';
-                    link.click();
-                } else {
-                    alert("⚠️ File surat tidak tersedia!");
-                }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".clickable-row").forEach(row => {
+                row.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (this.dataset.href && this.dataset.href !== '#') {
+                        let link = document.createElement('a');
+                        link.href = this.dataset.href;
+                        link.target = '_blank'; // paksa tab baru
+                        link.rel = 'noopener noreferrer';
+                        link.click();
+                    } else {
+                        alert("⚠️ File surat tidak tersedia!");
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endpush
-
-

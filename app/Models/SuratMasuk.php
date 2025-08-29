@@ -49,5 +49,4 @@ class SuratMasuk extends Model
     {
         return $this->hasMany(DistribusiSurat::class, 'surat_id');
     }
-    public function arsip() {}
 }

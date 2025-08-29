@@ -30728,6 +30728,43 @@ table.dataTable tbody td.select-checkbox:after {
   animation: pulse-glow 2s infinite;
 }
 
+.gradient-card {
+  background: linear-gradient(135deg, #1951b3 0%, #6a11cb 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.gradient-card::before,
+.gradient-card::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: 0;
+}
+
+.gradient-card::before {
+  width: 150px;
+  height: 150px;
+  bottom: -40px;
+  right: -40px;
+}
+
+.gradient-card::after {
+  width: 100px;
+  height: 100px;
+  top: -30px;
+  left: -30px;
+}
+
+.gradient-card .card-body {
+  position: relative;
+  z-index: 1;
+  /* biar isi di atas lingkaran */
+}
+
+
+
 @keyframes pulse-glow {
   0% {
     box-shadow: 0 0 5px #2563EB, 0 0 10px #3B82F6, 0 0 15px #60A5FA;

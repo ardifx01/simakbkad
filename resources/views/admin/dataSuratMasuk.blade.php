@@ -52,7 +52,7 @@
                                     <td>{{ $surat->jenis_surat }}</td>
                                     <td>
                                         @if ($surat->status_disposisi == 'Belum')
-                                            <label class="badge badge-warning">Belum</label>
+                                            <label class="badge badge-secondary">Proses</label>
                                         @elseif($surat->status_disposisi == 'Didisposisikan')
                                             <label class="badge badge-info">Didisposisikan</label>
                                         @else
@@ -67,16 +67,18 @@
                                         @endif
                                     </td>
                                     <td class="d-flex flex-column gap-2">
-                                        <a href="#"
-                                            class="mb-1 btn btn-sm btn-warning d-flex align-items-center justify-content-center">
+                                        <a href="{{ route('admin.suratmasuk.edit', $surat->id) }}"
+                                            onclick="event.stopPropagation();"
+                                            class="mb-1 btn btn-sm btn-primary d-flex align-items-center justify-content-center">
                                             <i class="ti-pencil mr-1"></i> Edit
                                         </a>
+
                                         <form action="{{ route('admin.suratmasuk.destroy', $surat->id) }}" method="POST"
                                             style="margin:0;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                            onclick="event.stopPropagation(); return confirm('Yakin ingin menghapus surat ini?')"
+                                                onclick="event.stopPropagation(); return confirm('Yakin ingin menghapus surat ini?')"
                                                 class="btn btn-sm btn-danger d-flex align-items-center justify-content-center">
                                                 <i class="ti-trash mr-1"></i> Hapus
                                             </button>

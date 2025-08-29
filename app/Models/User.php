@@ -47,6 +47,6 @@ class User extends Authenticatable
     }
     public function bidang()
     {
-        return $this->belongsTo(Bidang::class);
+        return $this->belongsTo(Bidang::class, 'bidang_id');
     }
 }
