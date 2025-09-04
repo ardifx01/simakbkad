@@ -128,7 +128,7 @@
                                           @endphp
 
                                           <div class="d-flex justify-content-center mb-3">
-                                              <div class="card col-md-11 p-2 mx-auto">
+                                              <div class="card col-md-11 p-2 mx-auto" style="background-color: #f6f7fa;">
                                                   <h6 style="font-size: 12px;"><strong>No Surat:</strong>
                                                       {{ $surat->no_surat }}</h6>
                                                   <p style="font-size: 12px;"><strong>Perihal:</strong>

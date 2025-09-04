@@ -55,9 +55,9 @@ class DisposisiController extends Controller
             . "Instansi: *{$surat->asal_surat}*\n"
             . "No. Surat: *{$surat->no_surat}*\n"
             . "Perihal: *{$surat->perihal}*\n"
-            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n\n"
-            . "Silakan login untuk melihat detail disposisi:\n"
-            . "https://simakbkad-production-5898.up.railway.app/";
+            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk));
+        // . "Silakan login untuk melihat detail disposisi:\n"
+        // . "https://simakbkad-production-5898.up.railway.app/";
 
         $this->kirimWaSekretaris($pesan);
         // dd($response);
@@ -139,14 +139,14 @@ class DisposisiController extends Controller
     public function dashboardAsset(Request $request)
     {
         $surat = SuratMasuk::where('status_kabid', 'Belum Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID BMD%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID BMD%');
             })->count();
         $arsip = SuratMasuk::where('status_kabid', 'Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID BMD%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID BMD%');
             })->count();
-        $total = Disposisi::where('kepada_bidang', 'LIKE', '%KABID BMD%')->count();
+        $total = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%KABID BMD%')->count();
 
         return view('asset.dashboard', compact('surat', 'arsip', 'total'));
     }
@@ -196,14 +196,14 @@ class DisposisiController extends Controller
     public function dashboardAkuntansi(Request $request)
     {
         $surat = SuratMasuk::where('status_kabid', 'Belum Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID AKUNTANSI%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID AKUNTANSI%');
             })->count();
         $arsip = SuratMasuk::where('status_kabid', 'Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID AKUNTANSI%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID AKUNTANSI%');
             })->count();
-        $total = Disposisi::where('kepada_bidang', 'LIKE', '%KABID AKUNTANSI%')->count();
+        $total = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%KABID AKUNTANSI%')->count();
 
         return view('akuntansi.dashboard', compact('surat', 'arsip', 'total'));
     }
@@ -255,14 +255,14 @@ class DisposisiController extends Controller
     public function dashboardAnggaran(Request $request)
     {
         $surat = SuratMasuk::where('status_kabid', 'Belum Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID PENGANGGARAN%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID PENGANGGARAN%');
             })->count();
         $arsip = SuratMasuk::where('status_kabid', 'Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID PENGANGGARAN%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID PENGANGGARAN%');
             })->count();
-        $total = Disposisi::where('kepada_bidang', 'LIKE', '%KABID PENGANGGARAN%')->count();
+        $total = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%KABID PENGANGGARAN%')->count();
 
         return view('anggaran.dashboard', compact('surat', 'arsip', 'total'));
     }
@@ -311,17 +311,17 @@ class DisposisiController extends Controller
 
         return view('pembendaharaan.arsip', compact('surats'));
     }
-        public function dashboardBendahara(Request $request)
+    public function dashboardBendahara(Request $request)
     {
         $surat = SuratMasuk::where('status_kabid', 'Belum Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID PEMBENDAHARAAN%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID PEMBENDAHARAAN%');
             })->count();
         $arsip = SuratMasuk::where('status_kabid', 'Selesai')
-            ->whereHas('disposisi', function ($q) {
-                $q->where('kepada_bidang', 'LIKE', '%KABID PEMBENDAHARAAN%');
+            ->whereHas('distribusi', function ($q) {
+                $q->where('bidang_tujuan', 'LIKE', '%KABID PEMBENDAHARAAN%');
             })->count();
-        $total = Disposisi::where('kepada_bidang', 'LIKE', '%KABID PEMBENDAHARAAN%')->count();
+        $total = DistribusiSurat::where('bidang_tujuan', 'LIKE', '%KABID PEMBENDAHARAAN%')->count();
 
         return view('pembendaharaan.dashboard', compact('surat', 'arsip', 'total'));
     }

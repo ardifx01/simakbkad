@@ -34,7 +34,7 @@
                     <div class="row">
                         <!-- Surat Belum Didisposisikan -->
                         <div class="col-md-4 mb-3">
-                            <div onclick="window.location.href='{{ route('asset.disposisi.index') }}'"
+                            <div onclick="window.location.href='{{ route('akuntansi.disposisi.index') }}'"
                                 class="card text-white gradient-card"
                                 style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
                                 <div class="card text-white"
@@ -57,7 +57,7 @@
 
                         <!-- Surat Sudah Didisposisikan -->
                         <div class="col-md-4 mb-3">
-                            <div onclick="window.location.href='{{ route('asset.suratmasuk.selesai') }}'"
+                            <div onclick="window.location.href='{{ route('akuntansi.suratmasuk.selesai') }}'"
                                 class="card text-white gradient-card"
                                 style="cursor: pointer; border-radius: 12px; overflow: hidden; position: relative;">
                                 <div class="card text-white"

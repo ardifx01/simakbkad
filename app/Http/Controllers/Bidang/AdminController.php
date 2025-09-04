@@ -204,7 +204,7 @@ class AdminController extends Controller
             'asal_surat'     => 'required|string|max:255',
             'perihal'        => 'required|string|max:255',
             'jenis_surat'    => 'required|string',
-            'file_surat'     => 'required|file|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*|max:5120',
+            'file_surat'     => 'required|file|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*|max:10240',
             'tanggal_surat'  => 'required|date',
             'tanggal_masuk'  => 'required|date',
             'sifat'          => 'required|string',
@@ -265,16 +265,14 @@ class AdminController extends Controller
             . "No. Surat: *{$surat->no_surat}*\n"
             . "Perihal: *{$surat->perihal}*\n"
             . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
-            . "No. Agenda: *{$surat->no_agenda}*\n"
-            . "Silakan login untuk melakukan disposisi:\n"
-            . "https://simakbkad-production-5898.up.railway.app/";
+            . "No. Agenda: *{$surat->no_agenda}";
+            // . "Silakan login untuk melakukan disposisi:\n"
+            // . "https://simakbkad-production-5898.up.railway.app/";
 
         $this->kirimWaKaban($pesan);
 
         return redirect()->route('admin.dataSuratMasuk')->with('success', 'Surat berhasil ditambahkan.');
     }
-
-
 
     public function kirimWaKaban($pesan)
     {

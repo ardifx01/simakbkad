@@ -27,7 +27,7 @@
                                     style="cursor: pointer;">
                                     <td>{{ $index + 1 }}</td>
                                     <td>
-                                        <a href="{{ route('asset.arsip.disposisi', $surat->id) }}" target="_blank"
+                                        <a href="{{ route('akuntansi.arsip.disposisi', $surat->id) }}" target="_blank"
                                             onclick="event.stopPropagation();"
                                             class="mb-1 btn btn-sm btn-primary d-flex align-items-center justify-content-center">
                                             Buka

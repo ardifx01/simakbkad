@@ -165,10 +165,10 @@ class SekretarisController extends Controller
             . "Dari Sekretaris ke Kabid\n\n"
             . "No. Surat: *{$surat->no_surat}*\n"
             . "Perihal: *{$surat->perihal}*\n"
-            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk)) . "*\n"
-            . "Catatan Sekretaris: *" . ($request->catatan ?? '-') . "*\n\n"
-            . "Silakan login untuk melihat detail:\n"
-            . url('/');
+            . "Tgl Masuk: *" . date('d M Y', strtotime($surat->tanggal_masuk));
+            // . "Catatan Sekretaris: *" . ($request->catatan ?? '-') . "*\n\n"
+            // . "Silakan login untuk melihat detail:\n"
+            // . url('/');
 
         // Kirim WA ke Kabid
         $this->kirimWaKabid($pesan);
